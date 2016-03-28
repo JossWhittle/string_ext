@@ -20,6 +20,14 @@ int main() {
 	/// Alternatively, call macro to pass along __LINE__ and __FILE__ for debugging
 	// format_str("...", args...)
 
+	// Formats follow the form:
+	// %[flags][width][.precision]specifier 
+	// Use %% for a percent sign
+
+	std::cout << format_str("Base and Point:\n%#x\n%#X\n%#f\n\n", 0xc, 0xf, 42.1f);
+
+	std::cout << format_str("Precision:\n%f\n%.1f\n%.2f\n%.3f\n%.4f\n\n", 1234.56789, 1234.56789, 1234.56789, 1234.56789, 1234.56789);
+
 	std::cout << format_str("Padding:\n%d\n%1d\n%2d\n%4d\n%8d\n%16d\n\n", 0, 1, 2, 4, 8, 16);
 
 	std::cout << format_str("Alignment:\n%-10d Left Aligned\n%10d Right Aligned\n\n", -10, 10);

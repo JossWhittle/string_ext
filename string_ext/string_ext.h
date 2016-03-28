@@ -215,6 +215,10 @@ namespace string_ext {
 		case 'E':
 			ret << std::scientific;
 			break;
+		case 'f':
+		case 'F':
+			//ret << std::fixed;
+			break;
 		case 'p':
 			ret << std::showbase << std::hex;
 			unsigned int *ptr = (unsigned int*) &val;
