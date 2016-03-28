@@ -4,6 +4,7 @@ struct Test {
 	int a;
 	double d;
 
+	/// Use format specifier '%s' for types with an ostream operator 
 	friend std::ostream& operator<<(std::ostream& os, const Test &v) {
 		os << format_str("Test{%i, %f}", v.a, v.d);
 		return os;
@@ -13,7 +14,17 @@ struct Test {
 int main() {
 	Test obj{5, 3.14};
 	
-	std::cout << format_str("int:\n"
+	/// Call to get a formatted string 
+	// std::format("...", args...)
+	
+	/// Alternatively, call macro to pass along __LINE__ and __FILE__ for debugging
+	// format_str("...", args...)
+
+	std::cout << format_str("Padding:\n%d\n%1d\n%2d\n%4d\n%8d\n%16d\n\n", 0, 1, 2, 4, 8, 16);
+
+	std::cout << format_str("Alignment:\n%-10d Left Aligned\n%10d Right Aligned\n\n", -10, 10);
+
+	std::cout << format_str("Types:\nint:\n"
 		"%d, %i, %u, %#o, %#x, %#X, \n\n"
 		"float:\n"
 		"%f, %F, %e, %E, \n%g, %G, %a, %A, \n\n"
