@@ -42,6 +42,16 @@ int main() {
 		1.1L, 2.2L, 3.3L, 4.4L, 
 		5.5L, 6.6L, 7.L, 8.L,
 		"Hello world.", '&', &obj, obj) << std::endl;
+
+	//std::cout << format_str("Cause an error: %m", 0);
+
+	// Line: 46 File: 'test.cpp'
+	// Undefined format specifier : 'm'
+
+	//std::cout << format_str("Cause an error: %i", 0.f);
+
+	// Line: 51 File : 'test.cpp'
+	//Incorrect format specifier : Saw 'i' | Expected 'f, F, e, E, g, G, a, A'
 	
 	return EXIT_SUCCESS;
 };
