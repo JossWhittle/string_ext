@@ -50,7 +50,7 @@ int main() {
 
 	//std::cout << format_str("Cause an error: %i", 0.f);
 
-	// Line: 51 File : 'test.cpp'
+	// Line: 51 File: 'test.cpp'
 	// Incorrect format specifier : Saw 'i' | Expected 'f, F, e, E, g, G, a, A'
 	
 	return EXIT_SUCCESS;
