@@ -8,6 +8,12 @@
 #include <cassert>
 
 namespace string_ext {
+	inline void _printDebug(const int _line_, const char *_file_) {
+		if (!(_line_ == -1 || _file_ == nullptr)) {
+			std::cerr << "Line: " << _line_ << " File: '" << _file_ << '\'' << std::endl;
+		}
+	};
+
 	struct _Format {
 		char specifier;
 		bool leftJustify;
@@ -29,27 +35,28 @@ namespace string_ext {
 		while ((++pos) != fmtE) {
 			if (mode == 0) {
 				/// Flags
-				if (*pos == '-') {
+				switch (*pos) {
+				case '-':
 					fmt.leftJustify = true;
 					//std::cout << "LEFTJUSTIFY: " << std::endl;
-				}
-				else if (*pos == '+') {
+					break;
+				case '+':
 					fmt.forceSign = true;
 					//std::cout << "FORCESIGN: " << std::endl;
-				}
-				else if (*pos == '0') {
+					break;
+				case '0':
 					fmt.padZeros = true;
 					//std::cout << "PADZEROS: " << std::endl;
-				}
-				else if (*pos == '#') {
+					break;
+				case '#':
 					fmt.forceLong = true;
 					//std::cout << "FORCELONG: " << std::endl;
-				}
-				else {
+					break;
+				default:
 					pos--;
 					mode++;
-					continue;
 				}
+				continue;
 			}
 			else if (mode == 1) {
 				// Width
@@ -81,13 +88,12 @@ namespace string_ext {
 						pos--;
 					}
 					mode++;
-					continue;
 				}
 				else {
 					pos--;
 					mode++;
-					continue;
 				}
+				continue;
 			}
 			else if (mode == 3) {
 				// Specifier
@@ -101,12 +107,27 @@ namespace string_ext {
 		if (!(fmt.specifier == 'd' || fmt.specifier == 'i' || fmt.specifier == 'u' || fmt.specifier == 'o'
 			|| fmt.specifier == 'x' || fmt.specifier == 'X' || fmt.specifier == 'f' || fmt.specifier == 'F'
 			|| fmt.specifier == 'e' || fmt.specifier == 'E' || fmt.specifier == 'g' || fmt.specifier == 'G'
-			|| fmt.specifier == 'a' || fmt.specifier == 'A' || fmt.specifier == 's' || fmt.specifier == 'c' || fmt.specifier == 'p')) {
+			|| fmt.specifier == 'a' || fmt.specifier == 'A' || fmt.specifier == 's' || fmt.specifier == 'c' 
+			|| fmt.specifier == 'p')) {
 
-			if (!(_line_ == -1 || _file_ == nullptr)) {
-				std::cerr << "Line: " << _line_ << " File: '" << _file_ << '\'' << std::endl;
+			_printDebug(_line_, _file_);
+			std::cerr << "Undefined format specifier: '"; 
+			if (fmt.specifier == '\n') {
+				std::cerr << "\\n";
 			}
-			std::cerr << "Undefined format specifier: '" << fmt.specifier << '\'' << std::endl << std::endl;
+			else if (fmt.specifier == '\r') {
+				std::cerr << "\\r";
+			}
+			else if (fmt.specifier == '\t') {
+				std::cerr << "\\t";
+			}
+			else if (fmt.specifier == '\0') {
+				std::cerr << "\\0";
+			}
+			else {
+				std::cerr << fmt.specifier;
+			}
+			std::cerr << '\'' << std::endl << std::endl;
 			std::exit(EXIT_FAILURE);
 		}
 		return fmt;
@@ -179,29 +200,26 @@ namespace string_ext {
 		_Format f = _parseFormat(_line_, _file_, pos, fmtE);
 
 		if (!_checkVal(f.specifier, val)) {
-			if (!(_line_ == -1 || _file_ == nullptr)) {
-				std::cerr << "Line: " << _line_ << " File: '" << _file_ << '\'' << std::endl;
-			}
-			std::cerr << "Incorrect format specifier: Saw '" << f.specifier << "' | Expected '" << _specString(val) << '\'' << std::endl << std::endl;
+			_printDebug(_line_, _file_);
+			std::cerr << "String Format | Incorrect format specifier: Saw '" << f.specifier << "' | Expected '" << _specString(val) << '\'' << std::endl << std::endl;
 			std::exit(EXIT_FAILURE);
 		}
 
 		std::ios state(NULL);
 		state.copyfmt(ret);
 
-		ret << std::boolalpha;
-		if (f.forceSign) ret << std::showpos;
-		if (f.forceLong) ret << std::showpoint << std::showbase;
-		if (f.padZeros)  ret << std::setfill('0');
-		if (f.leftJustify)  ret << std::left;
-		if (f.width > 0) ret << std::setw(f.width);
-		if (f.precision > 0) ret << std::setprecision(f.precision);
-		if (std::isupper(f.specifier)) ret << std::uppercase;
+										ret << std::boolalpha;
+		if (f.forceSign)				ret << std::showpos;
+		if (f.forceLong)				ret << std::showpoint << std::showbase;
+		if (f.padZeros)					ret << std::setfill('0');
+		if (f.leftJustify)				ret << std::left;
+		if (f.width > 0)				ret << std::setw(f.width);
+		if (f.precision > 0)			ret << std::setprecision(f.precision);
+		if (std::isupper(f.specifier))	ret << std::uppercase;
 
 		switch (f.specifier) {
 		case 'o':
 			ret << std::oct;
-			if (f.forceLong) ret << '0';
 			break;
 		case 'x':
 		case 'X':
@@ -214,10 +232,6 @@ namespace string_ext {
 		case 'e':
 		case 'E':
 			ret << std::scientific;
-			break;
-		case 'f':
-		case 'F':
-			//ret << std::fixed;
 			break;
 		case 'p':
 			ret << std::showbase << std::hex;
@@ -235,9 +249,38 @@ namespace string_ext {
 		_formatVal(_line_, _file_, ret, pos, fmtE, std::string(val));
 	};
 
+	/// Count the number of varadic template arguments
+	inline unsigned int _numArgs() { return 0u; };
+	template<typename T, typename ...Args>
+	inline unsigned int _numArgs(T &val, Args ...args) { return 1u + _numArgs(args...); };
+
 	inline void _format(const int _line_, const char *_file_, std::ostringstream &ret, std::string::const_iterator &fmtS, std::string::const_iterator &fmtE) {
-		/// No args, print remaining fmt string
-		ret << std::string(fmtS, fmtE);
+		auto pos = std::find(fmtS, fmtE, '%');
+		if (pos != fmtE) {
+			/// If delimiter is found then there were not enough arguments
+			const auto next = pos + 1;
+			if (next == fmtE) {
+				_printDebug(_line_, _file_);
+				std::cerr << "String Format | Incomplete format string: Ended in '%'" << std::endl << std::endl;
+				std::exit(EXIT_FAILURE);
+			}
+			else if (*next == '%') {
+				/// Special case for % sign
+				ret << '%';
+				pos += 2;
+				/// Formate the remaining string
+				_format(_line_, _file_, ret, pos, fmtE);
+			}
+			else {
+				_printDebug(_line_, _file_);
+				std::cerr << "String Format | Not enough arguments" << std::endl << std::endl;
+				std::exit(EXIT_FAILURE);
+			}
+		}
+		else {
+			/// No args, print remaining fmt string
+			ret << std::string(fmtS, fmtE);
+		}
 	};
 
 	template<typename T, typename ...Args>
@@ -246,14 +289,25 @@ namespace string_ext {
 		auto pos = std::find(fmtS, fmtE, '%');
 		if (pos == fmtE) {
 			/// If no delimiter is found print the rest of the fmt string blindly
-			_format(_line_, _file_, ret, fmtS, fmtE); //  remaining args... are discarded
+			//_format(_line_, _file_, ret, fmtS, fmtE); //  remaining args... are discarded
+
+			if (!(_line_ == -1 || _file_ == nullptr)) {
+				std::cerr << "Line: " << _line_ << " File: '" << _file_ << '\'' << std::endl;
+			}
+			std::cerr << "String Format | Unused arguments: '" << (1 + _numArgs(args...)) << '\'' << std::endl << std::endl;
+			std::exit(EXIT_FAILURE);
 		}
 		else {
 			/// Grab fmt before delimiter
 			ret << std::string(fmtS, pos);
 
 			const auto next = pos + 1;
-			if ((next != fmtE) && (*next == '%')) {
+			if (next == fmtE) {
+				_printDebug(_line_, _file_);
+				std::cerr << "String Format | Incomplete format string: Ended in '%'" << std::endl << std::endl;
+				std::exit(EXIT_FAILURE);
+			}
+			else if (*next == '%') {
 				/// Special case for % sign
 				ret << '%';
 				pos += 2;
