@@ -133,7 +133,7 @@ namespace str { /// Main namespace
 					case '-':
 						if (fmt.leftJustify) {
 							_printDebug(_line_, _file_);
-							std::cerr << "Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
+							std::cerr << "String Format | Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
 							std::exit(EXIT_FAILURE);
 						}
 						fmt.leftJustify = true;
@@ -141,7 +141,7 @@ namespace str { /// Main namespace
 					case '+':
 						if (fmt.forceSign) {
 							_printDebug(_line_, _file_);
-							std::cerr << "Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
+							std::cerr << "String Format | Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
 							std::exit(EXIT_FAILURE);
 						}
 						fmt.forceSign = true;
@@ -149,7 +149,7 @@ namespace str { /// Main namespace
 					case '0':
 						if (fmt.padZeros) {
 							_printDebug(_line_, _file_);
-							std::cerr << "Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
+							std::cerr << "String Format | Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
 							std::exit(EXIT_FAILURE);
 						}
 						fmt.padZeros = true;
@@ -157,7 +157,7 @@ namespace str { /// Main namespace
 					case '#':
 						if (fmt.forceLong) {
 							_printDebug(_line_, _file_);
-							std::cerr << "Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
+							std::cerr << "String Format | Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
 							std::exit(EXIT_FAILURE);
 						}
 						fmt.forceLong = true;
