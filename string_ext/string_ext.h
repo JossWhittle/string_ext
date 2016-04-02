@@ -1,6 +1,3 @@
-#pragma once
-
-#include <iostream>
 /*
 
 Copyright (C) 2016, Joss Whittle
@@ -26,6 +23,9 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
+#pragma once
+
+#include <iostream>
 #include <cctype>
 #include <string>
 #include <sstream>
