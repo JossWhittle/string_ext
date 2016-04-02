@@ -31,7 +31,7 @@ struct Test {
 
 	/// Use format specifier '%s' for types with an ostream operator 
 	friend std::ostream& operator<<(std::ostream& os, const Test &v) {
-		os << format_str("Test{%i, %f}", v.a, v.d);
+		os << 10 << format_str(" Test{%i, %f}", v.a, v.d);
 		return os;
 	};
 };
@@ -95,7 +95,7 @@ int main() {
 		5.5L, 6.6L, 7.L, 8.L,
 		"Hello world.", '&', &obj, obj) << std::endl;
 
-	std::cout << format_str("%20s\n%-20s\n", obj, obj);
+	std::cout << format_str("|%20s|\n|%-20s|\n", obj, obj);
 
 	//std::cout << format_str("Cause an error: %m", 0);
 	//

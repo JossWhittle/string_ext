@@ -30,7 +30,6 @@ DEALINGS IN THE SOFTWARE.
 #include <string>
 #include <sstream>
 #include <iomanip>
-#include <cassert>
 
 namespace str { /// Main namespace
 
@@ -133,58 +132,53 @@ namespace str { /// Main namespace
 		/// Structure to hold formatting info
 		struct _Format {
 			char specifier;
-			bool leftJustify;
-			bool forceSign;
-			bool forceLong;
-			bool padZeros;
-			unsigned int width;
-			unsigned int precision;
+			bool leftJustify, forceSign, forceLong, padZeros;
+			unsigned int width, precision;
 			_Format() : specifier(0),
 				leftJustify(false), forceSign(false),
 				forceLong(false), padZeros(false),
 				width(0), precision(0) {};
 		};
 
+		/**
+		* Munches a format declaration starting at pos, assuming *pos == '%'
+		* @param _line_		Pass along the debug macro __LINE__ from the call site
+		* @param _file_		Pass along the debug macro __FILE__ from the call site
+		* @param pos		Iterator to the current position in the format string
+		* @param fmtE		Iterator to the end of the format string
+		* @return			Returns a _Format object representing the munched format declaration
+		*/
 		inline _Format _parseFormat(const int _line_, const char *_file_,
 			std::string::const_iterator &pos,
 			std::string::const_iterator &fmtE) {
+
 			_Format fmt;
 			/// Assume pos starts on '%'
 			int mode = 0;
 			while ((++pos) != fmtE) {
 				if (mode == 0) {
 					/// Flags
+					auto fmtErr = [&]() {
+						_printDebug(_line_, _file_);
+						std::cerr << "String Format | Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
+						std::exit(EXIT_FAILURE);
+					};
+
 					switch (*pos) {
 					case '-':
-						if (fmt.leftJustify) {
-							_printDebug(_line_, _file_);
-							std::cerr << "String Format | Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
-							std::exit(EXIT_FAILURE);
-						}
+						if (fmt.leftJustify) fmtErr();
 						fmt.leftJustify = true;
 						break;
 					case '+':
-						if (fmt.forceSign) {
-							_printDebug(_line_, _file_);
-							std::cerr << "String Format | Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
-							std::exit(EXIT_FAILURE);
-						}
+						if (fmt.forceSign) fmtErr();
 						fmt.forceSign = true;
 						break;
 					case '0':
-						if (fmt.padZeros) {
-							_printDebug(_line_, _file_);
-							std::cerr << "String Format | Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
-							std::exit(EXIT_FAILURE);
-						}
+						if (fmt.padZeros) fmtErr();
 						fmt.padZeros = true;
 						break;
 					case '#':
-						if (fmt.forceLong) {
-							_printDebug(_line_, _file_);
-							std::cerr << "String Format | Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
-							std::exit(EXIT_FAILURE);
-						}
+						if (fmt.forceLong) fmtErr();
 						fmt.forceLong = true;
 						break;
 					default:
@@ -194,7 +188,7 @@ namespace str { /// Main namespace
 					continue;
 				}
 				else if (mode == 1) {
-					// Width
+					/// Width - Munch number
 					auto n = pos;
 					while (n != fmtE && std::isdigit(*n)) n++;
 					if (n != pos) {
@@ -208,8 +202,9 @@ namespace str { /// Main namespace
 					continue;
 				}
 				else if (mode == 2) {
-					// Precision
+					/// Precision
 					if (*pos == '.') {
+						/// Munch number
 						pos++;
 						auto n = pos;
 						while (n != fmtE && std::isdigit(*n)) n++;
@@ -229,13 +224,14 @@ namespace str { /// Main namespace
 					continue;
 				}
 				else if (mode == 3) {
-					// Specifier
+					/// Specifier
 					fmt.specifier = *pos;
 					pos++;
 					break;
 				}
 			}
 
+			/// Check for invalid specifier
 			if (!_containsChar(fmt.specifier, "diuoxXfFeEgGaAscpbB")) {
 				_printDebug(_line_, _file_);
 				std::cerr << "Undefined format specifier: '"
@@ -245,6 +241,15 @@ namespace str { /// Main namespace
 			return fmt;
 		};
 
+		/**
+		* Formats the current argument. From pos munch the format declaration and insert formatted val into the stream
+		* @param _line_		Pass along the debug macro __LINE__ from the call site
+		* @param _file_		Pass along the debug macro __FILE__ from the call site
+		* @param ret		The ostream to write output to
+		* @param pos		Iterator to the current position in the format string
+		* @param fmtE		Iterator to the end of the format string
+		* @param val		The next value to insert into fmt
+		*/
 		template<typename T>
 		inline void _formatVal(const int _line_, const char *_file_,
 			std::ostringstream &ret,
@@ -263,9 +268,11 @@ namespace str { /// Main namespace
 				std::exit(EXIT_FAILURE);
 			}
 
+			/// Cache stream state before formatting
 			std::ios state(NULL);
 			state.copyfmt(ret);
 
+			/// Apply flags/width/precision
 			if (f.forceSign)				ret << std::showpos;
 			if (f.forceLong)				ret << std::showpoint << std::showbase;
 			if (f.padZeros)					ret << std::setfill('0');
@@ -274,6 +281,7 @@ namespace str { /// Main namespace
 			if (f.precision > 0)			ret << std::setprecision(f.precision);
 			if (std::isupper(f.specifier))	ret << std::uppercase;
 
+			/// Specifier specific formatting
 			switch (f.specifier) {
 			case 'o':
 				ret << std::oct;
@@ -291,42 +299,60 @@ namespace str { /// Main namespace
 				ret << std::scientific;
 				break;
 			case 'b':
-			{
-				bool *ptr = reinterpret_cast<bool*>(&val);
-				if (f.forceLong) {
-					ret << (*ptr ? "true" : "false");
+				{ /// Special case: Need to reinterpret val to apply logic
+					bool *ptr = reinterpret_cast<bool*>(&val);
+					if (f.forceLong) {
+						ret << (*ptr ? "true" : "false");
+					}
+					else {
+						ret << (*ptr ? '1' : '0');
+					}
+					ret.copyfmt(state); /// Reset stream state to before _formatVal
+					return;
 				}
-				else {
-					ret << (*ptr ? "1" : "0");
-				}
-				ret.copyfmt(state);
-				return;
-			}
 			case 'B':
-			{
-				bool *ptr = reinterpret_cast<bool*>(&val);
-				if (f.forceLong) {
-					ret << (*ptr ? "TRUE" : "FALSE");
+				{ /// Special case: Need to reinterpret val to apply logic
+					bool *ptr = reinterpret_cast<bool*>(&val);
+					if (f.forceLong) {
+						ret << (*ptr ? "TRUE" : "FALSE");
+					}
+					else {
+						ret << (*ptr ? 'T' : 'F');
+					}
+					ret.copyfmt(state); /// Reset stream state to before _formatVal
+					return;
 				}
-				else {
-					ret << (*ptr ? "T" : "F");
-				}
-				ret.copyfmt(state);
-				return;
-			}
 			case 'p':
-			{
-				ret << std::showbase << std::hex;
-				unsigned int *ptr = reinterpret_cast<unsigned int*>(&val);
-				ret << *ptr;
-				ret.copyfmt(state);
-				return;
+				{ /// Special case: Need to reinterpret val to format as uint:hex
+					ret << std::showbase << std::hex;
+					unsigned int *ptr = reinterpret_cast<unsigned int*>(&val);
+					ret << *ptr;
+					ret.copyfmt(state); /// Reset stream state to before _formatVal
+					return;
+				}
+			case 's':
+				{ /// Special case: Use intermediate stream so ostream operators respect formatting
+					std::ostringstream s;
+					s << val;
+					ret << s.str();
+					ret.copyfmt(state); /// Reset stream state to before _formatVal
+					return;
+				}
 			}
-			}
+
 			ret << val;
-			ret.copyfmt(state);
+			ret.copyfmt(state); /// Reset stream state to before _formatVal
 		};
 
+		/**
+		* Formats the current argument. Special case, treat char* as std::string
+		* @param _line_		Pass along the debug macro __LINE__ from the call site
+		* @param _file_		Pass along the debug macro __FILE__ from the call site
+		* @param ret		The ostream to write output to
+		* @param pos		Iterator to the current position in the format string
+		* @param fmtE		Iterator to the end of the format string
+		* @param val		The next value to insert into fmt
+		*/
 		inline void _formatVal(const int _line_, const char *_file_,
 			std::ostringstream &ret,
 			std::string::const_iterator &pos,
@@ -337,11 +363,14 @@ namespace str { /// Main namespace
 			_formatVal(_line_, _file_, ret, pos, fmtE, std::string(val));
 		};
 
-		/// Count the number of varadic template arguments
-		inline unsigned int _numArgs() { return 0u; };
-		template<typename T, typename ...Args>
-		inline unsigned int _numArgs(T &val, Args ...args) { return 1u + _numArgs(args...); };
-
+		/**
+		* Recursively munches through the format string when no arguments are left/present
+		* @param _line_		Pass along the debug macro __LINE__ from the call site
+		* @param _file_		Pass along the debug macro __FILE__ from the call site
+		* @param ret		The ostream to write output to
+		* @param fmtS		Iterator to the start of the format string
+		* @param fmtE		Iterator to the end of the format string
+		*/
 		inline void _format(const int _line_, const char *_file_,
 			std::ostringstream &ret,
 			std::string::const_iterator &fmtS,
@@ -375,6 +404,21 @@ namespace str { /// Main namespace
 			}
 		};
 
+		/// Count the number of varadic template arguments
+		inline unsigned int _numArgs() { return 0u; };
+		template<typename T, typename ...Args>
+		inline unsigned int _numArgs(T &val, Args ...args) { return 1u + _numArgs(args...); };
+
+		/**
+		* Recursively munches through the format string inserting the set of arguments
+		* @param _line_		Pass along the debug macro __LINE__ from the call site
+		* @param _file_		Pass along the debug macro __FILE__ from the call site
+		* @param ret		The ostream to write output to
+		* @param fmtS		Iterator to the start of the format string
+		* @param fmtE		Iterator to the end of the format string
+		* @param val		The next value to insert into fmt
+		* @param ...args	The set of remaining arguments to insert into fmt
+		*/
 		template<typename T, typename ...Args>
 		inline void _format(const int _line_, const char *_file_,
 			std::ostringstream &ret,
@@ -388,9 +432,7 @@ namespace str { /// Main namespace
 				/// If no delimiter is found print the rest of the fmt string blindly
 				//_format(_line_, _file_, ret, fmtS, fmtE); //  remaining args... are discarded
 
-				if (!(_line_ == -1 || _file_ == nullptr)) {
-					std::cerr << "Line: " << _line_ << " File: '" << _file_ << '\'' << std::endl;
-				}
+				_printDebug(_line_, _file_);
 				std::cerr << "String Format | Unused arguments: '"
 					<< (1u + _numArgs(args...)) << '\'' << std::endl << std::endl;
 				std::exit(EXIT_FAILURE);
@@ -421,7 +463,7 @@ namespace str { /// Main namespace
 			}
 		};
 
-	}; // imp namespace
+	}; /// imp namespace
 
 	/// Public interface
 	#define format_str(...) str::format(__LINE__, __FILE__, __VA_ARGS__)
@@ -452,4 +494,4 @@ namespace str { /// Main namespace
 		return str::format(-1, nullptr, fmt, args...);
 	};
 
-}; // str namespace
+}; /// str namespace
