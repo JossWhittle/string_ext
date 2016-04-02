@@ -15,7 +15,7 @@ int main() {
 	Test obj{5, 3.14};
 	
 	/// Call to get a formatted string 
-	// std::format("...", args...)
+	// str::format("...", args...)
 	
 	/// Alternatively, call macro to pass along __LINE__ and __FILE__ for debugging
 	// format_str("...", args...)
@@ -47,7 +47,9 @@ int main() {
 
 	std::cout << format_str("Alignment:\n%-10d Left Aligned\n%10d Right Aligned\n\n", -10, 10);
 
-	std::cout << format_str("Types:\nint:\n"
+	std::cout << format_str("Types:\nbool:\n"
+		"%b, %B, %#b, %#B, \n\n"
+		"\nint:\n"
 		"%d, %i, %u, %#o, %#x, %#X, \n\n"
 		"float:\n"
 		"%f, %F, %e, %E, \n%g, %G, %a, %A, \n\n"
@@ -57,6 +59,7 @@ int main() {
 		"%f, %F, %e, %E, \n%g, %G, %a, %A, \n\n"
 		"string, char, ptr, ostream:\n"
 		"\"%s\", '%c', %p, %s\n",
+		true, false, true, false,
 		-1, -2, 3u, 4, 12, 15,
 		1.1f, 2.2f, 3.3f, 4.4f, 
 		5.5f, 6.6f, 7.f, 8.f,
