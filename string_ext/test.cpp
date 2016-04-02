@@ -95,32 +95,37 @@ int main() {
 		5.5L, 6.6L, 7.L, 8.L,
 		"Hello world.", '&', &obj, obj) << std::endl;
 
-	std::cout << format_str("|%20s|\n|%-20s|\n", obj, obj);
+	std::cout << format_str("ostream formatting:\n|%20s|\n|%-20s|\n", obj, obj);
 
 	//std::cout << format_str("Cause an error: %m", 0);
 	//
-	// Line: 46 File: 'test.cpp'
+	// Line: 100 File: 'test.cpp'
 	// String Format | Undefined format specifier : 'm'
 
 	//std::cout << format_str("Cause an error: %i", 0.f);
 	//
-	// Line: 51 File: 'test.cpp'
+	// Line: 105 File: 'test.cpp'
 	// String Format | Incorrect format specifier : Saw 'i' | Expected 'f, F, e, E, g, G, a, A'
 	
 	//std::cout << format_str("Cause an error: %");
 	//
-	// Line: 67 File: 'test.cpp'
+	// Line: 110 File: 'test.cpp'
 	// String Format | Incomplete format string : Ended in '%'
 
 	//std::cout << format_str("Cause an error: %d");
 	//
-	// Line: 72 File: 'test.cpp'
+	// Line: 115 File: 'test.cpp'
 	// String Format | Not enough arguments
 	
 	//std::cout << format_str("Cause an error: ", 1, 2, 3);
 	//
-	// Line: 77 File: 'test.cpp'
+	// Line: 120 File: 'test.cpp'
 	// String Format | Unused arguments : '3'
+
+	//std::cout << format_str("Cause an error: %##d", 0);
+	//
+	// Line: 125 File: 'test.cpp'
+	// String Format | Format flag already set : '#'
 
 	return EXIT_SUCCESS;
 };

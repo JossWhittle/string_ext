@@ -378,9 +378,12 @@ namespace str { /// Main namespace
 
 			auto pos = std::find(fmtS, fmtE, '%');
 			if (pos != fmtE) {
-				/// If delimiter is found then there were not enough arguments
+				/// Grab fmt before delimiter
+				ret << std::string(fmtS, pos);
+
 				const auto next = pos + 1;
 				if (next == fmtE) {
+					/// If fmt ends then there was an incomplete format declaration
 					_printDebug(_line_, _file_);
 					std::cerr << "String Format | Incomplete format string: Ended in '%'" << std::endl << std::endl;
 					std::exit(EXIT_FAILURE);
@@ -393,6 +396,7 @@ namespace str { /// Main namespace
 					_format(_line_, _file_, ret, pos, fmtE);
 				}
 				else {
+					/// If this is actually a format declaration then we don't have any args to insert 
 					_printDebug(_line_, _file_);
 					std::cerr << "String Format | Not enough arguments" << std::endl << std::endl;
 					std::exit(EXIT_FAILURE);
