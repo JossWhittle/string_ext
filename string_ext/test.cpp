@@ -35,6 +35,7 @@ int main() {
 	//            s                      (string / ostream<<), 
 	//            c                      (char), 
 	//            p                      (ptr)
+	//            b, B                   (bool)
 	
 	std::cout << format_str("Base and Point:\n%#x\n%#X\n%#f\n\n", 0xc, 0xf, 42.1f);
 
@@ -58,7 +59,7 @@ int main() {
 		"long double:\n"
 		"%f, %F, %e, %E, \n%g, %G, %a, %A, \n\n"
 		"string, char, ptr, ostream:\n"
-		"\"%s\", '%c', %p, %s\n",
+		"\"%-20s\", '%c', %p, %s\n",
 		true, false, true, false,
 		-1, -2, 3u, 4, 12, 15,
 		1.1f, 2.2f, 3.3f, 4.4f, 
@@ -68,6 +69,8 @@ int main() {
 		1.1L, 2.2L, 3.3L, 4.4L, 
 		5.5L, 6.6L, 7.L, 8.L,
 		"Hello world.", '&', &obj, obj) << std::endl;
+
+	std::cout << format_str("%20s\n%-20s\n", obj, obj);
 
 	//std::cout << format_str("Cause an error: %m", 0);
 	//
