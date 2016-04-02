@@ -258,9 +258,9 @@ namespace str { /// Main namespace
 			T &val) {
 
 			/// Modifies pos as it munches the formatting declaration!
-			/// Provides typechecking on formatting declaration because we know the type of val
 			_Format f = _parseFormat(_line_, _file_, pos, fmtE);
 
+			/// Provide typechecking on formatting declaration because we know the type of val
 			if (!_checkVal(f.specifier, val)) {
 				_printDebug(_line_, _file_);
 				std::cerr << "String Format | Incorrect format specifier: Saw '" << f.specifier
