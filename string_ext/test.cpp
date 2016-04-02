@@ -84,7 +84,7 @@ int main() {
 		"long double:\n"
 		"%f, %F, %e, %E, \n%g, %G, %a, %A, \n\n"
 		"string, char, ptr, ostream:\n"
-		"\"%-20s\", '%c', %p, %s\n",
+		"\"%-20s\", '%c', %p, %s\n\n",
 		true, false, true, false,
 		-1, -2, 3u, 4, 12, 15,
 		1.1f, 2.2f, 3.3f, 4.4f, 
@@ -93,7 +93,7 @@ int main() {
 		5.5, 6.6, 7., 8.,
 		1.1L, 2.2L, 3.3L, 4.4L, 
 		5.5L, 6.6L, 7.L, 8.L,
-		"Hello world.", '&', &obj, obj) << std::endl;
+		"Hello world.", '&', &obj, obj);
 
 	std::cout << format_str("ostream formatting:\n|%20s|\n|%-20s|\n", obj, obj);
 
