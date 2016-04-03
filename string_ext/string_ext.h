@@ -345,7 +345,6 @@ namespace str { /// Main namespace
 				{ /// Special case: Use intermediate stream so ostream operators respect formatting
 					std::ostringstream ss;
 					ss << val;
-					
 					const std::string s = ss.str();
 					if (f.precision == 0 || f.precision >= s.size()) {
 						ret << s;
@@ -353,7 +352,6 @@ namespace str { /// Main namespace
 					else {
 						ret << s.substr(0, f.precision);
 					}
-					
 					ret.copyfmt(state); /// Reset stream state to before _formatVal
 					return;
 				}
