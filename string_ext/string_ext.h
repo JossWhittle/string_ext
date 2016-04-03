@@ -61,7 +61,7 @@ namespace str { /// Main namespace
 		};
 
 		/// Get the valid specifiers for a given type
-		inline std::string _specString(int &val)					{ return "d, i, o, x, X"; };
+		inline std::string _specString(int &val)						{ return "d, i, o, x, X"; };
 		inline std::string _specString(short int &val)					{ return "d, i, o, x, X"; };
 		inline std::string _specString(long int &val)					{ return "d, i, o, x, X"; };
 		inline std::string _specString(long long int &val)				{ return "d, i, o, x, X"; };
@@ -71,8 +71,8 @@ namespace str { /// Main namespace
 		inline std::string _specString(unsigned long long int &val)			{ return "u, o, x, X"; };
 		inline std::string _specString(float &val)					{ return "f, F, e, E, g, G, a, A"; };
 		inline std::string _specString(double &val)					{ return "f, F, e, E, g, G, a, A"; };
-		inline std::string _specString(long double &val)				{ return "f, F, e, E, g, G, a, A"; };
-		inline std::string _specString(std::string &val)				{ return "s"; };
+		inline std::string _specString(long double &val)					{ return "f, F, e, E, g, G, a, A"; };
+		inline std::string _specString(std::string &val)					{ return "s"; };
 		template<typename T>
 		inline std::string _specString(T &val)						{ return "s"; };
 		inline std::string _specString(char &val)					{ return "c"; };
@@ -90,9 +90,9 @@ namespace str { /// Main namespace
 		inline bool _checkVal(const char specifier, unsigned int &val)			{ return _containsChar(specifier, "uoxX"); };
 		inline bool _checkVal(const char specifier, unsigned short int &val)		{ return _containsChar(specifier, "uoxX"); };
 		inline bool _checkVal(const char specifier, unsigned long int &val)		{ return _containsChar(specifier, "uoxX"); };
-		inline bool _checkVal(const char specifier, unsigned long long int &val)	{ return _containsChar(specifier, "uoxX"); };
+		inline bool _checkVal(const char specifier, unsigned long long int &val)		{ return _containsChar(specifier, "uoxX"); };
 		inline bool _checkVal(const char specifier, float &val)				{ return _containsChar(specifier, "fFeEgGaA"); };
-		inline bool _checkVal(const char specifier, double &val)			{ return _containsChar(specifier, "fFeEgGaA"); };
+		inline bool _checkVal(const char specifier, double &val)				{ return _containsChar(specifier, "fFeEgGaA"); };
 		inline bool _checkVal(const char specifier, long double &val)			{ return _containsChar(specifier, "fFeEgGaA"); };
 		inline bool _checkVal(const char specifier, std::string &val)			{ return specifier == 's'; };
 		template<class T>
