@@ -99,7 +99,7 @@ int main() {
 
 	unsigned int a, b = 0;
 	std::cout << format_str("Hello%n world.%n | ", &a, &b);
-	std::cout << format_str("%u %u\n\n", a, b);
+	std::cout << format_str("%#x %#x\n\n", a, b);
 
 	//std::cout << format_str("Cause an error: %m", 0);
 	//

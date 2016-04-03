@@ -325,7 +325,6 @@ namespace str { /// Main namespace
 				{ /// Special case: Need to reinterpret val to insert current string length
 					unsigned int **ptr = reinterpret_cast<unsigned int**>(&val);
 					**ptr = (unsigned int) ret.str().size();
-
 					ret.copyfmt(state); /// Reset stream state to before _formatVal
 					return;
 				}
