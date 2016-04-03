@@ -66,43 +66,43 @@ namespace str { /// Main namespace
 		inline std::string _specString(long int &val)					{ return "d, i, o, x, X"; };
 		inline std::string _specString(long long int &val)				{ return "d, i, o, x, X"; };
 		inline std::string _specString(unsigned int &val)				{ return "u, o, x, X"; };
-		inline std::string _specString(unsigned short int &val)				{ return "u, o, x, X"; };
-		inline std::string _specString(unsigned long int &val)				{ return "u, o, x, X"; };
-		inline std::string _specString(unsigned long long int &val)			{ return "u, o, x, X"; };
-		inline std::string _specString(float &val)					{ return "f, F, e, E, g, G, a, A"; };
-		inline std::string _specString(double &val)					{ return "f, F, e, E, g, G, a, A"; };
-		inline std::string _specString(long double &val)					{ return "f, F, e, E, g, G, a, A"; };
-		inline std::string _specString(std::string &val)					{ return "s"; };
+		inline std::string _specString(unsigned short int &val)			{ return "u, o, x, X"; };
+		inline std::string _specString(unsigned long int &val)			{ return "u, o, x, X"; };
+		inline std::string _specString(unsigned long long int &val)		{ return "u, o, x, X"; };
+		inline std::string _specString(float &val)						{ return "f, F, e, E, g, G, a, A"; };
+		inline std::string _specString(double &val)						{ return "f, F, e, E, g, G, a, A"; };
+		inline std::string _specString(long double &val)				{ return "f, F, e, E, g, G, a, A"; };
+		inline std::string _specString(std::string &val)				{ return "s"; };
 		template<typename T>
-		inline std::string _specString(T &val)						{ return "s"; };
-		inline std::string _specString(char &val)					{ return "c"; };
-		inline std::string _specString(int *&val)					{ return "p, n"; };
+		inline std::string _specString(T &val)							{ return "s"; };
+		inline std::string _specString(char &val)						{ return "c"; };
+		inline std::string _specString(int *&val)						{ return "p, n"; };
 		inline std::string _specString(unsigned int *&val)				{ return "p, n"; };
 		template<typename T>
-		inline std::string _specString(T *&val)						{ return "p"; };
-		inline std::string _specString(bool &val)					{ return "b, B"; };
+		inline std::string _specString(T *&val)							{ return "p"; };
+		inline std::string _specString(bool &val)						{ return "b, B"; };
 
 		/// Check if the given type matches the given specifier
-		inline bool _checkVal(const char specifier, int &val)				{ return _containsChar(specifier, "dioxX"); };
-		inline bool _checkVal(const char specifier, short int &val)			{ return _containsChar(specifier, "dioxX"); };
-		inline bool _checkVal(const char specifier, long int &val)			{ return _containsChar(specifier, "dioxX"); };
-		inline bool _checkVal(const char specifier, long long int &val)			{ return _containsChar(specifier, "dioxX"); };
-		inline bool _checkVal(const char specifier, unsigned int &val)			{ return _containsChar(specifier, "uoxX"); };
+		inline bool _checkVal(const char specifier, int &val)						{ return _containsChar(specifier, "dioxX"); };
+		inline bool _checkVal(const char specifier, short int &val)					{ return _containsChar(specifier, "dioxX"); };
+		inline bool _checkVal(const char specifier, long int &val)					{ return _containsChar(specifier, "dioxX"); };
+		inline bool _checkVal(const char specifier, long long int &val)				{ return _containsChar(specifier, "dioxX"); };
+		inline bool _checkVal(const char specifier, unsigned int &val)				{ return _containsChar(specifier, "uoxX"); };
 		inline bool _checkVal(const char specifier, unsigned short int &val)		{ return _containsChar(specifier, "uoxX"); };
-		inline bool _checkVal(const char specifier, unsigned long int &val)		{ return _containsChar(specifier, "uoxX"); };
-		inline bool _checkVal(const char specifier, unsigned long long int &val)		{ return _containsChar(specifier, "uoxX"); };
-		inline bool _checkVal(const char specifier, float &val)				{ return _containsChar(specifier, "fFeEgGaA"); };
-		inline bool _checkVal(const char specifier, double &val)				{ return _containsChar(specifier, "fFeEgGaA"); };
-		inline bool _checkVal(const char specifier, long double &val)			{ return _containsChar(specifier, "fFeEgGaA"); };
-		inline bool _checkVal(const char specifier, std::string &val)			{ return specifier == 's'; };
+		inline bool _checkVal(const char specifier, unsigned long int &val)			{ return _containsChar(specifier, "uoxX"); };
+		inline bool _checkVal(const char specifier, unsigned long long int &val)	{ return _containsChar(specifier, "uoxX"); };
+		inline bool _checkVal(const char specifier, float &val)						{ return _containsChar(specifier, "fFeEgGaA"); };
+		inline bool _checkVal(const char specifier, double &val)					{ return _containsChar(specifier, "fFeEgGaA"); };
+		inline bool _checkVal(const char specifier, long double &val)				{ return _containsChar(specifier, "fFeEgGaA"); };
+		inline bool _checkVal(const char specifier, std::string &val)				{ return specifier == 's'; };
 		template<class T>
-		inline bool _checkVal(const char specifier, T &val)				{ return specifier == 's'; };
-		inline bool _checkVal(const char specifier, char &val)				{ return specifier == 'c'; };
-		inline bool _checkVal(const char specifier, int *&val)				{ return _containsChar(specifier, "pn"); };
-		inline bool _checkVal(const char specifier, unsigned int *&val)			{ return _containsChar(specifier, "pn"); };
+		inline bool _checkVal(const char specifier, T &val)							{ return specifier == 's'; };
+		inline bool _checkVal(const char specifier, char &val)						{ return specifier == 'c'; };
+		inline bool _checkVal(const char specifier, int *&val)						{ return _containsChar(specifier, "pn"); };
+		inline bool _checkVal(const char specifier, unsigned int *&val)				{ return _containsChar(specifier, "pn"); };
 		template<typename T>
-		inline bool _checkVal(const char specifier, T *&val)				{ return specifier == 'p'; };
-		inline bool _checkVal(const char specifier, bool &val)				{ return _containsChar(specifier, "bB"); };
+		inline bool _checkVal(const char specifier, T *&val)						{ return specifier == 'p'; };
+		inline bool _checkVal(const char specifier, bool &val)						{ return _containsChar(specifier, "bB"); };
 
 		/// Structure to hold formatting info
 		struct _Format {
@@ -135,8 +135,7 @@ namespace str { /// Main namespace
 					/// Flags
 					auto fmtErr = [&]() {
 						_printDebug(_line_, _file_);
-						std::cerr << "String Format | Format flag already set: '" 
-							  << *pos << '\'' << std::endl << std::endl;
+						std::cerr << "String Format | Format flag already set: '" << *pos << '\'' << std::endl << std::endl;
 						std::exit(EXIT_FAILURE);
 					};
 
@@ -211,7 +210,7 @@ namespace str { /// Main namespace
 			if (!_containsChar(fmt.specifier, "diuoxXfFeEgGaAscpnbB")) {
 				_printDebug(_line_, _file_);
 				std::cerr << "Undefined format specifier: '"
-					  << _escape(fmt.specifier) << '\'' << std::endl << std::endl;
+					<< _escape(fmt.specifier) << '\'' << std::endl << std::endl;
 				std::exit(EXIT_FAILURE);
 			}
 			return fmt;
@@ -240,7 +239,7 @@ namespace str { /// Main namespace
 			if (!_checkVal(f.specifier, val)) {
 				_printDebug(_line_, _file_);
 				std::cerr << "String Format | Incorrect format specifier: Saw '" << f.specifier
-					  << "' | Expected '" << _specString(val) << '\'' << std::endl << std::endl;
+					<< "' | Expected '" << _specString(val) << '\'' << std::endl << std::endl;
 				std::exit(EXIT_FAILURE);
 			}
 
