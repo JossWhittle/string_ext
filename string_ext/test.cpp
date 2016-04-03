@@ -59,7 +59,7 @@ int main() {
 	//            f, F, e, E, g, G, a, A (float / double / long double)
 	//            s                      (string / ostream<<), 
 	//            c                      (char), 
-	//            p                      (ptr)
+	//            p, n                   (ptr / int* for string length)
 	//            b, B                   (bool)
 	
 	std::cout << format_str("Base and Point:\n%#x\n%#X\n%#f\n\n", 0xc, 0xf, 42.1f);
