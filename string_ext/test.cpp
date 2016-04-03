@@ -95,7 +95,11 @@ int main() {
 		5.5L, 6.6L, 7.L, 8.L,
 		"Hello world.", '&', &obj, obj);
 
-	std::cout << format_str("ostream formatting:\n|%20s|\n|%-20s|\n", obj, obj);
+	std::cout << format_str("ostream formatting:\n|%20.6s|\n|%-20s|\n\n", obj, obj);
+
+	unsigned int a, b = 0;
+	std::cout << format_str("Hello%n world.%n | ", &a, &b);
+	std::cout << format_str("%u %u\n\n", a, b);
 
 	//std::cout << format_str("Cause an error: %m", 0);
 	//
