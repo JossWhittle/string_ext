@@ -57,7 +57,7 @@ int main() {
 	//            # (show base or decimal) 
 	//
 	// specifier: d, i, u, o, x, X       (int)
-	//            f, F, e, E, g, G, a, A (float / double / long double)
+	//            f, e, E, g, G, a, A    (float / double / long double)
 	//            s                      (string / ostream<<), 
 	//            c                      (char), 
 	//            p, n                   (ptr / int* for string length)
@@ -79,20 +79,20 @@ int main() {
 		"\nint:\n"
 		"%d, %i, %u, %#o, %#x, %#X, \n\n"
 		"float:\n"
-		"%f, %F, %e, %E, \n%g, %G, %a, %A, \n\n"
+		"%f, %e, %E, \n%g, %G, %a, %A, \n\n"
 		"double:\n"
-		"%f, %F, %e, %E, \n%g, %G, %a, %A, \n\n"
+		"%f, %e, %E, \n%g, %G, %a, %A, \n\n"
 		"long double:\n"
-		"%f, %F, %e, %E, \n%g, %G, %a, %A, \n\n"
+		"%f, %e, %E, \n%g, %G, %a, %A, \n\n"
 		"string, char, ptr, ostream:\n"
 		"\"%-20s\", '%c', %p, %s\n\n",
 		true, false, true, false,
 		-1, -2, 3u, 4, 12, 15,
-		1.1f, 2.2f, 3.3f, 4.4f, 
+		1.1f, 3.3f, 4.4f, 
 		5.5f, 6.6f, 7.f, 8.f,
-		1.1, 2.2, 3.3, 4.4, 
+		1.1, 3.3, 4.4, 
 		5.5, 6.6, 7., 8.,
-		1.1L, 2.2L, 3.3L, 4.4L, 
+		1.1L, 3.3L, 4.4L, 
 		5.5L, 6.6L, 7.L, 8.L,
 		"Hello world.", '&', &obj, obj);
 
