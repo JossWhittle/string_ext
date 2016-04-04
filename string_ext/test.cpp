@@ -97,9 +97,9 @@ int main() {
 
 	std::cout << format_str("ostream formatting:\n|%20.6s|\n|%-20s|\n\n", obj, obj);
 
-	unsigned int a, b = 0;
-	std::cout << format_str("Hello%n world.%n | ", &a, &b);
-	std::cout << format_str("%#x %#x\n\n", a, b);
+	unsigned int a = 0, b = 0;
+	std::cout << format_str("Hello%n world.%n | Same Format: a = %u b = %u\n", &a, &b, a, b);
+	std::cout << format_str("Next Format: a = %u b = %u\n\n", a, b);
 
 	//std::cout << format_str("Cause an error: %m", 0);
 	//
