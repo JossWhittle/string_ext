@@ -36,7 +36,7 @@ Formats follow the form:
 	std::cout << format_str("Cause an error: %i", 0.f);
 
 	// Line: 105 File: 'test.cpp'
-	// String Format | Incorrect format specifier : Saw 'i' | Expected 'f, F, e, E, g, G, a, A'
+	// String Format | Incorrect format specifier for type (float): Saw 'i' | Expected 'f, F, e, E, g, G, a, A'
 	
 	std::cout << format_str("Cause an error: %");
 

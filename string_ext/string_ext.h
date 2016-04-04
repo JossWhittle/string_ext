@@ -278,7 +278,7 @@ namespace str { /// Main namespace
 			/// Provide typechecking on formatting declaration because we know the type of val
 			if (!_checkVal(f.specifier, val)) {
 				_printDebug(_line_, _file_);
-				std::cerr << "String Format | Incorrect format specifier: Saw '" << f.specifier
+				std::cerr << "String Format | Incorrect format specifier for type (" << typeid(val).name() << "): Saw '" << f.specifier
 					<< "' | Expected '" << _specString(val) << '\'' << std::endl << std::endl;
 				std::exit(EXIT_FAILURE);
 			}
