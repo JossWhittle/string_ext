@@ -8,6 +8,9 @@ Alternatively, call macro to pass along `__LINE__` and `__FILE__` for debugging
 	
 	format_str("...", args...)
 
+	Equivalent to...
+	str::format(__LINE__, __FILE__, "...", args...)
+
 Formats follow the form:
 	
 	%[flags][width][.precision]specifier 
