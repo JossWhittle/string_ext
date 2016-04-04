@@ -28,7 +28,7 @@ Formats follow the form:
 				# (show base or decimal) 
 
 	specifier : d, i, u, o, x, X       (short/int/long/long long & unsigned variants)
-				f, F, e, E, g, G, a, A (float / double / long double)
+				f, e, E, g, G, a, A    (float / double / long double)
 				s                      (string / any type with an ostream<< operator), 
 				c                      (char), 
 				p, n                   (ptr / int* for string length)
