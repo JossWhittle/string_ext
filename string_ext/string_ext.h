@@ -78,11 +78,11 @@ namespace str { /// Main namespace
 		inline std::string _specString(unsigned long long int &val)		
 		{ return "u, o, x, X"; };
 		inline std::string _specString(float &val)						
-		{ return "f, F, e, E, g, G, a, A"; };
+		{ return "f, e, E, g, G, a, A"; };
 		inline std::string _specString(double &val)						
-		{ return "f, F, e, E, g, G, a, A"; };
+		{ return "f, e, E, g, G, a, A"; };
 		inline std::string _specString(long double &val)				
-		{ return "f, F, e, E, g, G, a, A"; };
+		{ return "f, e, E, g, G, a, A"; };
 		inline std::string _specString(std::string &val)				
 		{ return "s"; };
 		template<typename T>
@@ -119,11 +119,11 @@ namespace str { /// Main namespace
 		inline std::string _specString(const unsigned long long int &val)		
 		{ return "u, o, x, X"; };
 		inline std::string _specString(const float &val)						
-		{ return "f, F, e, E, g, G, a, A"; };
+		{ return "f, e, E, g, G, a, A"; };
 		inline std::string _specString(const double &val)						
-		{ return "f, F, e, E, g, G, a, A"; };
+		{ return "f, e, E, g, G, a, A"; };
 		inline std::string _specString(const long double &val)				
-		{ return "f, F, e, E, g, G, a, A"; };
+		{ return "f, e, E, g, G, a, A"; };
 		inline std::string _specString(const std::string &val)				
 		{ return "s"; };
 		template<typename T>
@@ -133,10 +133,6 @@ namespace str { /// Main namespace
 		{ return "c"; };
 		inline std::string _specString(const unsigned char &val)						
 		{ return "c"; };
-		inline std::string _specString(const int *&val)						
-		{ return "p, n"; };
-		inline std::string _specString(const unsigned int *&val)				
-		{ return "p, n"; };
 		template<typename T>
 		inline std::string _specString(const T *&val)							
 		{ return "p"; };
@@ -161,11 +157,11 @@ namespace str { /// Main namespace
 		inline bool _checkVal(const char specifier, unsigned long long int &val)	
 		{ return _containsChar(specifier, "uoxX"); };
 		inline bool _checkVal(const char specifier, float &val)						
-		{ return _containsChar(specifier, "fFeEgGaA"); };
+		{ return _containsChar(specifier, "feEgGaA"); };
 		inline bool _checkVal(const char specifier, double &val)					
-		{ return _containsChar(specifier, "fFeEgGaA"); };
+		{ return _containsChar(specifier, "feEgGaA"); };
 		inline bool _checkVal(const char specifier, long double &val)				
-		{ return _containsChar(specifier, "fFeEgGaA"); };
+		{ return _containsChar(specifier, "feEgGaA"); };
 		inline bool _checkVal(const char specifier, std::string &val)				
 		{ return specifier == 's'; };
 		template<class T>
@@ -202,11 +198,11 @@ namespace str { /// Main namespace
 		inline bool _checkVal(const char specifier, const unsigned long long int &val)	
 		{ return _containsChar(specifier, "uoxX"); };
 		inline bool _checkVal(const char specifier, const float &val)						
-		{ return _containsChar(specifier, "fFeEgGaA"); };
+		{ return _containsChar(specifier, "feEgGaA"); };
 		inline bool _checkVal(const char specifier, const double &val)					
-		{ return _containsChar(specifier, "fFeEgGaA"); };
+		{ return _containsChar(specifier, "feEgGaA"); };
 		inline bool _checkVal(const char specifier, const long double &val)				
-		{ return _containsChar(specifier, "fFeEgGaA"); };
+		{ return _containsChar(specifier, "feEgGaA"); };
 		inline bool _checkVal(const char specifier, const std::string &val)				
 		{ return specifier == 's'; };
 		template<class T>
@@ -216,10 +212,6 @@ namespace str { /// Main namespace
 		{ return specifier == 'c'; };
 		inline bool _checkVal(const char specifier, const unsigned char &val)						
 		{ return specifier == 'c'; };
-		inline bool _checkVal(const char specifier, const int *&val)		 			
-		{ return _containsChar(specifier, "p"); }; // %n disabled for const int*
-		inline bool _checkVal(const char specifier, const unsigned int *&val)				
-		{ return _containsChar(specifier, "p"); }; // %n disabled for const unsigned int*
 		template<typename T>
 		inline bool _checkVal(const char specifier, const T *&val)						
 		{ return specifier == 'p'; };
@@ -352,7 +344,7 @@ namespace str { /// Main namespace
 			std::ostringstream &ret,
 			std::string::const_iterator &pos,
 			std::string::const_iterator &fmtE,
-			T &val) {
+			T &&val) {
 
 			/// Modifies pos as it munches the formatting declaration!
 			_Format f = _parseFormat(_line_, _file_, pos, fmtE);
@@ -361,7 +353,7 @@ namespace str { /// Main namespace
 			if (!_checkVal(f.specifier, val)) {
 				_printDebug(_line_, _file_);
 				std::cerr << "String Format | Incorrect format specifier for type (" << typeid(val).name() << "): Saw '" << f.specifier
-					<< "' | Expected '" << _specString(val) << '\'' << std::endl << std::endl;
+						  << "' | Expected '" << _specString(val) << '\'' << std::endl << std::endl;
 				std::exit(EXIT_FAILURE);
 			}
 
