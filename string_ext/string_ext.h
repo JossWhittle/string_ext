@@ -90,6 +90,8 @@ namespace str { /// Main namespace
 		{ return "s"; };
 		inline std::string _specString(char &val)						
 		{ return "c"; };
+		inline std::string _specString(unsigned char &val)						
+		{ return "c"; };
 		inline std::string _specString(int *&val)						
 		{ return "p, n"; };
 		inline std::string _specString(unsigned int *&val)				
@@ -129,6 +131,8 @@ namespace str { /// Main namespace
 		inline bool _checkVal(const char specifier, T &val)							
 		{ return specifier == 's'; };
 		inline bool _checkVal(const char specifier, char &val)						
+		{ return specifier == 'c'; };
+		inline bool _checkVal(const char specifier, unsigned char &val)						
 		{ return specifier == 'c'; };
 		inline bool _checkVal(const char specifier, int *&val)						
 		{ return _containsChar(specifier, "pn"); };
