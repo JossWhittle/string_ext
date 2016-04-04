@@ -462,7 +462,7 @@ namespace str { /// Main namespace
 
 				_printDebug(_line_, _file_);
 				std::cerr << "String Format | Unused arguments: '"
-					<< (1u + _numArgs(args...)) << '\'' << std::endl << std::endl;
+						  << (1u + _numArgs(args...)) << '\'' << std::endl << std::endl;
 				std::exit(EXIT_FAILURE);
 			}
 			else {
