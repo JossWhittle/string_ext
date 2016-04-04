@@ -1,3 +1,8 @@
+# string_ext
+## A C++11 implementation of `sprintf` with typechecking and error handling.
+
+Implements `printf` http://www.cplusplus.com/reference/cstdio/printf/ style string formatting using C++ stringstreams and ios manipulators, returning the formatted result as a std::string. 
+
 ## Usage
 
 Call to get a formatted string 

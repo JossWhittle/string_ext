@@ -106,7 +106,7 @@ int main() {
 	// Line: 100 File: 'test.cpp'
 	// String Format | Undefined format specifier : 'm'
 
-	std::cout << format_str("Cause an error: %i", 0.f);
+	//std::cout << format_str("Cause an error: %i", 0.f);
 	//
 	// Line: 105 File: 'test.cpp'
 	// String Format | Incorrect format specifier for type (float): Saw 'i' | Expected 'f, F, e, E, g, G, a, A'
