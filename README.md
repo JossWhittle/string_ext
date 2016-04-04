@@ -4,7 +4,7 @@ Call to get a formatted string
 	
 	str::format("...", args...)
 	
-Alternatively, call macro to pass along __LINE__ and __FILE__ for debugging
+Alternatively, call macro to pass along `__LINE__` and `__FILE__` for debugging
 	
 	format_str("...", args...)
 
@@ -19,9 +19,9 @@ Formats follow the form:
 				0 (pad with 0's)
 				# (show base or decimal) 
 
-	specifier : d, i, u, o, x, X       (int)
+	specifier : d, i, u, o, x, X       (short/int/long/long long & unsigned variants)
 				f, F, e, E, g, G, a, A (float / double / long double)
-				s                      (string / ostream<<), 
+				s                      (string / any type with an ostream<< operator), 
 				c                      (char), 
 				p, n                   (ptr / int* for string length)
 	            b, B                   (bool)
