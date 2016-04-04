@@ -102,6 +102,47 @@ namespace str { /// Main namespace
 		inline std::string _specString(bool &val)						
 		{ return "b, B"; };
 
+		inline std::string _specString(const int &val)						
+		{ return "d, i, o, x, X"; };
+		inline std::string _specString(const short int &val)					
+		{ return "d, i, o, x, X"; };
+		inline std::string _specString(const long int &val)					
+		{ return "d, i, o, x, X"; };
+		inline std::string _specString(const long long int &val)				
+		{ return "d, i, o, x, X"; };
+		inline std::string _specString(const unsigned int &val)				
+		{ return "u, o, x, X"; };
+		inline std::string _specString(const unsigned short int &val)			
+		{ return "u, o, x, X"; };
+		inline std::string _specString(const unsigned long int &val)			
+		{ return "u, o, x, X"; };
+		inline std::string _specString(const unsigned long long int &val)		
+		{ return "u, o, x, X"; };
+		inline std::string _specString(const float &val)						
+		{ return "f, F, e, E, g, G, a, A"; };
+		inline std::string _specString(const double &val)						
+		{ return "f, F, e, E, g, G, a, A"; };
+		inline std::string _specString(const long double &val)				
+		{ return "f, F, e, E, g, G, a, A"; };
+		inline std::string _specString(const std::string &val)				
+		{ return "s"; };
+		template<typename T>
+		inline std::string _specString(const T &val)							
+		{ return "s"; };
+		inline std::string _specString(const char &val)						
+		{ return "c"; };
+		inline std::string _specString(const unsigned char &val)						
+		{ return "c"; };
+		inline std::string _specString(const int *&val)						
+		{ return "p, n"; };
+		inline std::string _specString(const unsigned int *&val)				
+		{ return "p, n"; };
+		template<typename T>
+		inline std::string _specString(const T *&val)							
+		{ return "p"; };
+		inline std::string _specString(const bool &val)						
+		{ return "b, B"; };
+
 		/// Check if the given type matches the given specifier
 		inline bool _checkVal(const char specifier, int &val)						
 		{ return _containsChar(specifier, "dioxX"); };
@@ -142,6 +183,47 @@ namespace str { /// Main namespace
 		inline bool _checkVal(const char specifier, T *&val)						
 		{ return specifier == 'p'; };
 		inline bool _checkVal(const char specifier, bool &val)						
+		{ return _containsChar(specifier, "bB"); };
+
+		inline bool _checkVal(const char specifier, const int &val)						
+		{ return _containsChar(specifier, "dioxX"); };
+		inline bool _checkVal(const char specifier, const short int &val)					
+		{ return _containsChar(specifier, "dioxX"); };
+		inline bool _checkVal(const char specifier, const long int &val)					
+		{ return _containsChar(specifier, "dioxX"); };
+		inline bool _checkVal(const char specifier, const long long int &val)				
+		{ return _containsChar(specifier, "dioxX"); };
+		inline bool _checkVal(const char specifier, const unsigned int &val)				
+		{ return _containsChar(specifier, "uoxX"); };
+		inline bool _checkVal(const char specifier, const unsigned short int &val)		
+		{ return _containsChar(specifier, "uoxX"); };
+		inline bool _checkVal(const char specifier, const unsigned long int &val)			
+		{ return _containsChar(specifier, "uoxX"); };
+		inline bool _checkVal(const char specifier, const unsigned long long int &val)	
+		{ return _containsChar(specifier, "uoxX"); };
+		inline bool _checkVal(const char specifier, const float &val)						
+		{ return _containsChar(specifier, "fFeEgGaA"); };
+		inline bool _checkVal(const char specifier, const double &val)					
+		{ return _containsChar(specifier, "fFeEgGaA"); };
+		inline bool _checkVal(const char specifier, const long double &val)				
+		{ return _containsChar(specifier, "fFeEgGaA"); };
+		inline bool _checkVal(const char specifier, const std::string &val)				
+		{ return specifier == 's'; };
+		template<class T>
+		inline bool _checkVal(const char specifier, const T &val)							
+		{ return specifier == 's'; };
+		inline bool _checkVal(const char specifier, const char &val)						
+		{ return specifier == 'c'; };
+		inline bool _checkVal(const char specifier, const unsigned char &val)						
+		{ return specifier == 'c'; };
+		inline bool _checkVal(const char specifier, const int *&val)		 			
+		{ return _containsChar(specifier, "p"); }; // %n disabled for const int*
+		inline bool _checkVal(const char specifier, const unsigned int *&val)				
+		{ return _containsChar(specifier, "p"); }; // %n disabled for const unsigned int*
+		template<typename T>
+		inline bool _checkVal(const char specifier, const T *&val)						
+		{ return specifier == 'p'; };
+		inline bool _checkVal(const char specifier, const bool &val)						
 		{ return _containsChar(specifier, "bB"); };
 
 		/// Structure to hold formatting info
@@ -315,7 +397,7 @@ namespace str { /// Main namespace
 				break;
 			case 'b':
 				{ /// Special case: Need to reinterpret val to apply logic
-					bool *ptr = reinterpret_cast<bool*>(&val);
+					bool *ptr = (bool*)(&val);
 					if (f.forceLong) {
 						ret << (*ptr ? "true" : "false");
 					}
@@ -327,7 +409,7 @@ namespace str { /// Main namespace
 				}
 			case 'B':
 				{ /// Special case: Need to reinterpret val to apply logic
-					bool *ptr = reinterpret_cast<bool*>(&val);
+					bool *ptr = (bool*)(&val);
 					if (f.forceLong) {
 						ret << (*ptr ? "TRUE" : "FALSE");
 					}
@@ -340,7 +422,7 @@ namespace str { /// Main namespace
 			case 'p':
 				{ /// Special case: Need to reinterpret val to format as uint:hex
 					ret << std::showbase << std::hex;
-					unsigned int *ptr = reinterpret_cast<unsigned int*>(&val);
+					unsigned int *ptr = (unsigned int*)(&val);
 					ret << *ptr;
 					ret.copyfmt(state); /// Reset stream state to before _formatVal
 					return;
@@ -361,7 +443,7 @@ namespace str { /// Main namespace
 				}
 			case 'n':
 				{ /// Special case: Need to reinterpret val to insert current string length
-					unsigned int **ptr = reinterpret_cast<unsigned int**>(&val);
+					unsigned int **ptr = (unsigned int**)(&val);
 					**ptr = (unsigned int) ret.str().size();
 					ret.copyfmt(state); /// Reset stream state to before _formatVal
 					return;
@@ -439,7 +521,7 @@ namespace str { /// Main namespace
 		/// Count the number of varadic template arguments
 		inline unsigned int _numArgs() { return 0u; };
 		template<typename T, typename ...Args>
-		inline unsigned int _numArgs(T &val, Args ...args) { return 1u + _numArgs(args...); };
+		inline unsigned int _numArgs(T &&val, Args &&...args) { return 1u + _numArgs(args...); };
 
 		/**
 		* Recursively munches through the format string inserting the set of arguments
@@ -456,7 +538,7 @@ namespace str { /// Main namespace
 			std::ostringstream &ret,
 			std::string::const_iterator &fmtS,
 			std::string::const_iterator &fmtE,
-			T &val, Args ...args) {
+			T &&val, Args &&...args) {
 
 			/// Find the next format delimiter
 			auto pos = std::find(fmtS, fmtE, '%');
@@ -509,7 +591,7 @@ namespace str { /// Main namespace
 	 * @return			The string fmt with args formatted and inserted where specified
 	 */
 	template<typename ...Args>
-	inline std::string format(const int _line_, const char *_file_, const std::string &fmt, Args ...args) {
+	inline std::string format(const int _line_, const char *_file_, const std::string &fmt, Args &&...args) {
 		std::ostringstream ret;
 		str::imp::_format(_line_, _file_, ret, fmt.begin(), fmt.end(), args...);
 		return ret.str();
@@ -522,7 +604,7 @@ namespace str { /// Main namespace
 	* @return			The string fmt with args formatted and inserted where specified
 	*/
 	template<typename ...Args>
-	inline std::string format(const std::string &fmt, Args ...args) {
+	inline std::string format(const std::string &fmt, Args &&...args) {
 		return str::format(-1, nullptr, fmt, args...);
 	};
 

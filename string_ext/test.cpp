@@ -31,7 +31,8 @@ struct Test {
 
 	/// Use format specifier '%s' for types with an ostream operator 
 	friend std::ostream& operator<<(std::ostream& os, const Test &v) {
-		os << 10 << format_str(" Test{%i, %f}", v.a, v.d);
+		int p;
+		os << 10 << format_str(" Test{%i, %f}%n %d", v.a, v.d, &p, p);
 		return os;
 	};
 };
@@ -99,7 +100,6 @@ int main() {
 
 	unsigned int a = 0, b = 0;
 	std::cout << format_str("Hello%n world.%n | Same Format: a = %u b = %u\n", &a, &b, a, b);
-	std::cout << format_str("Next Format: a = %u b = %u\n\n", a, b);
 
 	//std::cout << format_str("Cause an error: %m", 0);
 	//
