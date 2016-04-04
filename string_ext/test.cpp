@@ -57,49 +57,50 @@ int main() {
 	//            # (show base or decimal) 
 	//
 	// specifier: d, i, u, o, x, X       (int)
-	//            f, F, e, E, g, G, a, A (float / double / long double)
+	//            f, e, E, g, G, a, A    (float / double / long double)
 	//            s                      (string / ostream<<), 
 	//            c                      (char), 
 	//            p, n                   (ptr / int* for string length)
 	//            b, B                   (bool)
 	
-	std::cout << format_str("Base and Point:\n%#x\n%#X\n%#f\n\n", 0xc, 0xf, 42.1f);
+	/// No args
+	printf("Hello world.\n");
+	std::cout << format_str("Hello world.\n") << std::endl;
 
-	std::cout << format_str("Precision:\n%f\n%.1f\n%.2f\n%.3f\n"
-							"%.4f\n%.5f\n%.6f\n%.7f\n\n", 
-							1234.56789, 1234.56789, 1234.56789, 1234.56789, 
-							1234.56789, 1234.56789, 1234.56789, 1234.56789);
+	/// int
+	printf("int %d %i %u %o %x %X\n", -1, -2, 3u, 4, 5u, -6);
+	std::cout << format_str("int %d %i %u %o %x %X\n", -1, -2, 3u, 4, 5u, -6) << std::endl;
+	/// int - Base
+	printf("int %#o %#x %#X\n", 4, 5, -6);
+	std::cout << format_str("int %#o %#x %#X\n", 4, 5, -6) << std::endl;
+	/// int - Width / Alignment
+	printf("int |%-10d|%10d|\n", 4, 5);
+	std::cout << format_str("int |%-10d|%10d|\n", 4, 5) << std::endl;
+	/// int - Width / Pad with Zero
+	printf("int %08d %08d\n", 44, 5555);
+	std::cout << format_str("int %08d %08d\n", 44, 5555) << std::endl;
+	/// int - Sign
+	printf("int %+d %+d\n", -1, 2);
+	std::cout << format_str("int %+d %+d\n", -1, 2) << std::endl;
+	/// int - Char Count
+	//int a = 0;
+	//printf("int %n %d\n", &a, a); // Compiler error MSVC'2013, %n deprecated
+	//int b;
+	//std::cout << format_str("int %n%d\n", &b, b) << std::endl; // Works!
 
-	std::cout << format_str("Padding:\n%d\n%1d\n%2d\n%4d\n%8d\n%16d\n\n", 0, 1, 2, 4, 8, 16);
+	/// float
+	printf("float %f\n", 3.14f);
+	std::cout << format_str("float %f\n", 3.14) << std::endl;
+	/// float - Base
+	printf("float %#f %f %#f %f %#f\n", 3.14, 2., 2., 2.0, 2.0); // MSVC'2013 printf not respecting padding
+	std::cout << format_str("float %#f %f %#f %f %#f\n", 3.14, 2., 2., 2.0, 2.0) << std::endl; 
+	/// float - Width
+	printf("float |%1f|%2f|%4f|%8f|%16f|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789); 
+	std::cout << format_str("float |%1f|%2f|%4f|%8f|%16f|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float - Width
+	printf("float |%.1f|%.2f|%.4f|%.8f|%.16f|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
+	std::cout << format_str("float |%.1f|%.2f|%.4f|%.8f|%.16f|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
 
-	std::cout << format_str("Alignment:\n%-10d Left Aligned\n%10d Right Aligned\n\n", -10, 10);
-
-	std::cout << format_str("Types:\nbool:\n"
-		"%b, %B, %#b, %#B, \n\n"
-		"\nint:\n"
-		"%d, %i, %u, %#o, %#x, %#X, \n\n"
-		"float:\n"
-		"%f, %F, %e, %E, \n%g, %G, %a, %A, \n\n"
-		"double:\n"
-		"%f, %F, %e, %E, \n%g, %G, %a, %A, \n\n"
-		"long double:\n"
-		"%f, %F, %e, %E, \n%g, %G, %a, %A, \n\n"
-		"string, char, ptr, ostream:\n"
-		"\"%-20s\", '%c', %p, %s\n\n",
-		true, false, true, false,
-		-1, -2, 3u, 4, 12, 15,
-		1.1f, 2.2f, 3.3f, 4.4f, 
-		5.5f, 6.6f, 7.f, 8.f,
-		1.1, 2.2, 3.3, 4.4, 
-		5.5, 6.6, 7., 8.,
-		1.1L, 2.2L, 3.3L, 4.4L, 
-		5.5L, 6.6L, 7.L, 8.L,
-		"Hello world.", '&', &obj, obj);
-
-	std::cout << format_str("ostream formatting:\n|%20.6s|\n|%-20s|\n\n", obj, obj);
-
-	unsigned int a = 0, b = 0;
-	std::cout << format_str("Hello%n world.%n | Same Format: a = %u b = %u\n", &a, &b, a, b);
 
 	//std::cout << format_str("Cause an error: %m", 0);
 	//
