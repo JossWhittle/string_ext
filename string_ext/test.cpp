@@ -283,10 +283,10 @@ int main() {
 	// Line: 120 File: 'test.cpp'
 	// String Format | Unused arguments : '3'
 
-	//std::cout << format_str("Cause an error: %##d", 0);
+	std::cout << format_str("Cause an error: %##d", 0);
 	//
 	// Line: 125 File: 'test.cpp'
-	// String Format | Format flag already set : '#'
+	// String Format | Format flag already set: 'Force Long'
 
 	return EXIT_SUCCESS;
 };
