@@ -31,8 +31,7 @@ struct Test {
 
 	/// Use format specifier '%s' for types with an ostream operator 
 	friend std::ostream& operator<<(std::ostream& os, const Test &v) {
-		int p;
-		os << 10 << format_str(" Test{%i, %f}%n %d", v.a, v.d, &p, p);
+		os << 10 << format_str(" Test{%i, %f}", v.a, v.d);
 		return os;
 	};
 };
@@ -74,6 +73,9 @@ int main() {
 
 	std::cout << format_str("Alignment:\n%-10d Left Aligned\n%10d Right Aligned\n\n", -10, 10);
 
+	const bool test = true;
+	const std::string testS = "HELLO WORLD";
+	const Test *testP = &obj;
 	std::cout << format_str("Types:\nbool:\n"
 		"%b, %B, %#b, %#B, \n\n"
 		"\nint:\n"
@@ -85,8 +87,8 @@ int main() {
 		"long double:\n"
 		"%f, %e, %E, \n%g, %G, %a, %A, \n\n"
 		"string, char, ptr, ostream:\n"
-		"\"%-20s\", '%c', %p, %s\n\n",
-		true, false, true, false,
+		"\"%-20s\", '%c', %p, %*s\n\n",
+		test, false, true, false,
 		-1, -2, 3u, 4, 12, 15,
 		1.1f, 3.3f, 4.4f, 
 		5.5f, 6.6f, 7.f, 8.f,
@@ -94,12 +96,12 @@ int main() {
 		5.5, 6.6, 7., 8.,
 		1.1L, 3.3L, 4.4L, 
 		5.5L, 6.6L, 7.L, 8.L,
-		"Hello world.", '&', &obj, obj);
+		testS, '&', testP, 5, obj);
 
 	std::cout << format_str("ostream formatting:\n|%20.6s|\n|%-20s|\n\n", obj, obj);
 
-	unsigned int a = 0, b = 0;
-	std::cout << format_str("Hello%n world.%n | Same Format: a = %u b = %u\n", &a, &b, a, b);
+	unsigned short int a = 0, b = 0;
+	std::cout << format_str("Hello%n world.%n\n%*sSame Format: a = %u b = %u\n", a, b, a, "", a, b);
 
 	//std::cout << format_str("Cause an error: %m", 0);
 	//
