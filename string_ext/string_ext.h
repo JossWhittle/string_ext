@@ -332,10 +332,10 @@ namespace str { /// Main namespace
 						if (fmt.leftJustify) fmtErr("Left Justify");
 						fmt.leftJustify = true;
 						break;
-					case ' ':
-						if (fmt.forceSignSpace) fmtErr("Force Sign Space");
-						fmt.forceSignSpace = true;
-						break;
+					//case ' ':
+					//	if (fmt.forceSignSpace) fmtErr("Force Sign Space");
+					//	fmt.forceSignSpace = true;
+					//	break;
 					case '+':
 						if (fmt.forceSign) fmtErr("Force Sign");
 						fmt.forceSign = true;
@@ -594,6 +594,9 @@ namespace str { /// Main namespace
 			case 'e':
 			case 'E':
 				ret << std::scientific;
+				break;
+			case 'f':
+				ret << std::fixed;
 				break;
 			case 'b':
 			case 'B':
