@@ -425,7 +425,7 @@ namespace str { /// Main namespace
 			const _Format &f,
 			T &&val) {
 			_printDebug(_line_, _file_);
-			std::cerr << "String Format | Here be dragons... _formatBool called with (" << typeid(val).name() << ")" << std::endl << std::endl;
+			std::cerr << "String Format | _formatBool called with (" << typeid(val).name() << ")" << std::endl << std::endl;
 			std::exit(EXIT_FAILURE);
 		};
 		inline void _formatBool(const int _line_, const char *_file_,
@@ -484,7 +484,7 @@ namespace str { /// Main namespace
 			const _Format &f,
 			T &&val) {
 			_printDebug(_line_, _file_);
-			std::cerr << "String Format | Here be dragons... _formatPtr called with (" << typeid(val).name() << ")" << std::endl << std::endl;
+			std::cerr << "String Format | _formatPtr called with (" << typeid(val).name() << ")" << std::endl << std::endl;
 			std::exit(EXIT_FAILURE);
 		};
 		template<typename T>
