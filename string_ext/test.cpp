@@ -268,6 +268,16 @@ int main() {
 	// Line: 251 File: 'test.cpp'
 	// String Format | Not enough arguments : Variable width & precision needs '3' arguments. Have '2'
 
+	//std::cout << format_str("Cause an error: %*d", 'a', 0);
+	//
+	// Line: 271 File: 'test.cpp'
+	// String Format | Invalid width argument : (char)
+
+	//std::cout << format_str("Cause an error: %.*d", 3.14L, 0);
+	//
+	// Line: 276 File: 'test.cpp'
+	// String Format | Invalid precision argument : (long double)
+
 	//std::cout << format_str("Cause an error: ", 1, 2, 3);
 	//
 	// Line: 120 File: 'test.cpp'
