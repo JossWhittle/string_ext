@@ -27,11 +27,11 @@ Formats follow the form:
 				0 (pad with 0's)
 				# (show base or decimal) 
 
-	specifier : d, i, u, o, x, X       (short/int/long/long long & unsigned variants)
+	specifier : d, i, u, o, x, X, n    (short/int/long/long long & unsigned variants)
 				f, e, E, g, G, a, A    (float / double / long double)
 				s                      (string / any type with an ostream<< operator), 
 				c                      (char), 
-				p, n                   (ptr / int* for string length)
+				p                      (ptr)
 	            b, B                   (bool)
 
 ## Error Handling
