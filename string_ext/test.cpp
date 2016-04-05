@@ -31,7 +31,7 @@ struct Test {
 
 	/// Use format specifier '%s' for types with an ostream operator 
 	friend std::ostream& operator<<(std::ostream& os, const Test &v) {
-		os << 10 << format_str(" Test{%i, %f}", v.a, v.d);
+		os << "(" << 10 << format_str(" Test{%i, %f}", v.a, v.d) << ")";
 		return os;
 	};
 };
@@ -55,53 +55,178 @@ int main() {
 	//            0 (pad with 0's)
 	//            # (show base or decimal) 
 	//
-	// specifier: d, i, u, o, x, X       (int)
+	// specifier: d, i, u, o, x, X, n    (int)
 	//            f, e, E, g, G, a, A    (float / double / long double)
 	//            s                      (string / ostream<<), 
 	//            c                      (char), 
-	//            p, n                   (ptr / int* for string length)
+	//            p                      (ptr)
 	//            b, B                   (bool)
+
+	/// No args
+	printf("Hello world.\n");
+	std::cout << format_str("Hello world.\n") << std::endl;
+
+	/// int
+	printf("int %d %i %u %o %x %X\n", -1, -2, 3u, 4, 5u, -6);
+	std::cout << format_str("int %d %i %u %o %x %X\n", -1, -2, 3u, 4, 5u, -6) << std::endl;
+	/// int - Base Zeros
+	printf("int %o %x %X %#o %#x %#X\n", 0, 0, 0, 0, 0, 0);
+	std::cout << format_str("int %o %x %X %#o %#x %#X\n", 0, 0, 0, 0, 0, 0) << std::endl;
+	/// int - Types
+	printf("int %hd %ld %lld %hu %lu %llu\n", (short) -1, -2l, -3ll, (unsigned short) 4, 5ul, 6ull); // Need to use h, l, ll modifiers for types
+	std::cout << format_str("int %d %d %d %u %u %u\n", (short) -1, -2l, -3ll, (unsigned short) 4u, 5ul, 6ull) << std::endl; // Types determined automatically!
+	/// int - Base
+	printf("int %#o %#x %#X\n", 4, 5, -6);
+	std::cout << format_str("int %#o %#x %#X\n", 4, 5, -6) << std::endl;
+	/// int - Width / Alignment
+	printf("int |%-10d|%10d|\n", 4, 5);
+	std::cout << format_str("int |%-10d|%10d|\n", 4, 5) << std::endl;
+	/// int - Width / Pad with Zero
+	printf("int %08d %08d\n", 44, 5555);
+	std::cout << format_str("int %08d %08d\n", 44, 5555) << std::endl;
+	/// int - Sign
+	printf("int %+d %+d\n", -1, 2);
+	std::cout << format_str("int %+d %+d\n", -1, 2) << std::endl;
+	/// int - Char Count
+	//int a = 0;
+	//printf("int %n %d\n", &a, a); // Compiler error MSVC'2013, %n deprecated
+	int b;
+	std::cout << format_str("int: %n%d\n", b, b) << std::endl; // Works!
+	int c;
+	std::cout << format_str("int%n|\n%*s|%d\n", c, c, "", c) << std::endl; // Works!
+
+	/// float
+	printf("float %f\n", 3.14f);
+	std::cout << format_str("float %f\n", 3.14f) << std::endl;
+	/// float - Types
+	printf("float %.16f %.16f %.16Lf\n", 1.23456789f, 1.23456789, 1.23456789L); // Need to use L modifier for long double
+	std::cout << format_str("float %.16f %.16f %.16f\n", 1.23456789f, 1.23456789, 1.23456789L) << std::endl; // Types determined automatically!
+	/// float - Base
+	printf("float %#f %f %#f %f %#f\n", 3.14, 2., 2., 2.0, 2.0); 
+	std::cout << format_str("float %#f %f %#f %f %#f\n", 3.14, 2., 2., 2.0, 2.0) << std::endl; 
+	/// float - Width
+	printf("float |%1f|%2f|%4f|%8f|%16f|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789); 
+	std::cout << format_str("float |%1f|%2f|%4f|%8f|%16f|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float - Precision
+	printf("float |%.1f|%.2f|%.4f|%.8f|%.16f|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
+	std::cout << format_str("float |%.1f|%.2f|%.4f|%.8f|%.16f|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float - Width / Precision
+	printf("float |%10.1f|%10.2f|%10.4f|%10.8f|%10.16f|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
+	std::cout << format_str("float |%10.1f|%10.2f|%10.4f|%10.8f|%10.16f|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float - Sign
+	printf("float '%+f' '%+f' '%f' '%f'\n", -1.f, 2.f, -1.f, 2.f);
+	std::cout << format_str("float '%+f' '%+f' '%f' '%f'\n", -1.f, 2.f, -1.f, 2.f) << std::endl;
+
+	/// float-e
+	printf("float-e %e %E\n", 3.14f, 3.14f);
+	std::cout << format_str("float-e %e %E\n", 3.14f, 3.14f) << std::endl;
+	/// float-e - Types
+	printf("float-e %.16e %.16e %.16Le\n", 1.23456789f, 1.23456789, 1.23456789L); // Need to use L modifier for long double
+	std::cout << format_str("float-e %.16e %.16e %.16e\n", 1.23456789f, 1.23456789, 1.23456789L) << std::endl; // Types determined automatically!
+	/// float-e - Base
+	printf("float-e %#e %e %#e %e %#e\n", 3.14, 2., 2., 2.0, 2.0);
+	std::cout << format_str("float-e %#e %e %#e %e %#e\n", 3.14, 2., 2., 2.0, 2.0) << std::endl;
+	/// float-e - Width
+	printf("float-e |%1e|%2e|%4e|%8e|%16e|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
+	std::cout << format_str("float-e |%1e|%2e|%4e|%8e|%16e|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float-e - Precision
+	printf("float-e |%.1e|%.2e|%.4e|%.8e|%.16e|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
+	std::cout << format_str("float-e |%.1e|%.2e|%.4e|%.8e|%.16e|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float-e - Width / Precision
+	printf("float-e |%10.1e|%10.2e|%10.4e|%10.8e|%10.16e|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
+	std::cout << format_str("float-e |%10.1e|%10.2e|%10.4e|%10.8e|%10.16e|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float-e - Sign
+	printf("float-e '%+e' '%+e' '%e' '%e'\n", -1.f, 2.f, -1.f, 2.f);
+	std::cout << format_str("float-e '%+e' '%+e' '%e' '%e'\n", -1.f, 2.f, -1.f, 2.f) << std::endl;
+
+	/// float-g
+	printf("float-g %g %G\n", 3.14f, 3.14f);
+	std::cout << format_str("float-g %g %G\n", 3.14f, 3.14f) << std::endl;
+	/// float-g - Types
+	printf("float-g %.16g %.16g %.16Lg\n", 1.23456789f, 1.23456789, 1.23456789L); // Need to use L modifier for long double
+	std::cout << format_str("float-g %.16g %.16g %.16g\n", 1.23456789f, 1.23456789, 1.23456789L) << std::endl; // Types determined automatically!
+	/// float-g - Base
+	printf("float-g %#g %g %#g %g %#g\n", 3.14, 2., 2., 2.0, 2.0); 
+	std::cout << format_str("float-g %#g %g %#g %g %#g\n", 3.14, 2., 2., 2.0, 2.0) << std::endl;
+	/// float-g - Width
+	printf("float-g |%1g|%2g|%4g|%8g|%16g|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
+	std::cout << format_str("float-g |%1g|%2g|%4g|%8g|%16g|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float-g - Precision
+	printf("float-g |%.1g|%.2g|%.4g|%.8g|%.16g|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
+	std::cout << format_str("float-g |%.1g|%.2g|%.4g|%.8g|%.16g|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float-g - Width / Precision
+	printf("float-g |%10.1g|%10.2g|%10.4g|%10.8g|%10.16g|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
+	std::cout << format_str("float-g |%10.1g|%10.2g|%10.4g|%10.8g|%10.16g|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float-g - Sign
+	printf("float-g '%+g' '%+g' '%g' '%g'\n", -1.f, 2.f, -1.f, 2.f);
+	std::cout << format_str("float-g '%+g' '%+g' '%g' '%g'\n", -1.f, 2.f, -1.f, 2.f) << std::endl;
+
+	/// float-a
+	printf("float-a %a %A\n", 3.14f, 3.14f);
+	std::cout << format_str("float-a %a %A\n", 3.14f, 3.14f) << std::endl;
+	/// float-a - Types
+	printf("float-a %.16a %.16a %.16La\n", 1.23456789f, 1.23456789, 1.23456789L); // Need to use L modifier for long double
+	std::cout << format_str("float-a %.16a %.16a %.16a\n", 1.23456789f, 1.23456789, 1.23456789L) << std::endl; // Types determined automatically!
+	/// float-a - Base
+	printf("float-a %#a %a %#a %a %#a\n", 3.14, 2., 2., 2.0, 2.0); 
+	std::cout << format_str("float-a %#a %a %#a %a %#a\n", 3.14, 2., 2., 2.0, 2.0) << std::endl;
+	/// float-a - Width
+	printf("float-a |%1a|%2a|%4a|%8a|%16a|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
+	std::cout << format_str("float-a |%1a|%2a|%4a|%8a|%16a|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float-a - Precision
+	printf("float-a |%.1a|%.2a|%.4a|%.8a|%.16a|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
+	std::cout << format_str("float-a |%.1a|%.2a|%.4a|%.8a|%.16a|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float-a - Width / Precision
+	printf("float-a |%10.1a|%10.2a|%10.4a|%10.8a|%10.16a|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
+	std::cout << format_str("float-a |%10.1a|%10.2a|%10.4a|%10.8a|%10.16a|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
+	/// float-a - Sign
+	printf("float-a '%+a' '%+a' '%a' '%a'\n", -1.f, 2.f, -1.f, 2.f);
+	std::cout << format_str("float-a '%+a' '%+a' '%a' '%a'\n", -1.f, 2.f, -1.f, 2.f) << std::endl;
+
+	/// string
+	printf("string '%s'\n", "Hello world");
+	std::cout << format_str("string '%s'\n", "Hello world") << std::endl;
+	/// string - ostream<<
+	//printf("string '%s' '%s'\n", "Hello world", obj); // No way of directly converting type to string
+	std::cout << format_str("string '%s' '%s'\n", "Hello world", obj) << std::endl;
+	/// string - Width
+	printf("string '%5s' '%10s' '%s'\n", "ABC", "ABCDEFGHIJKLMN", "ABCDEFGHIJKLMN");
+	std::cout << format_str("string '%5s' '%10s' '%s'\n", "ABC", "ABCDEFGHIJKLMN", "ABCDEFGHIJKLMN") << std::endl;
+	/// string - Precision
+	printf("string '%.5s' '%.10s' '%s'\n", "ABCDEFGHIJKLMN", "ABCDEFGHIJKLMN", "ABCDEFGHIJKLMN");
+	std::cout << format_str("string '%.5s' '%.10s' '%s'\n", "ABCDEFGHIJKLMN", "ABCDEFGHIJKLMN", "ABCDEFGHIJKLMN") << std::endl;
+
+	/// char
+	printf("char '%c' '%c'\n", (unsigned char) '&', '&');
+	std::cout << format_str("char '%c' '%c'\n", (unsigned char) '&', '&') << std::endl;
+	/// char - Width
+	printf("char '%-4c' '%4c'\n", (unsigned char) '&', '&');
+	std::cout << format_str("char '%-4c' '%4c'\n", (unsigned char) '&', '&') << std::endl;
+	/// char - Precision
+	printf("char '%.4c' '%.4c'\n", (unsigned char) '&', '&');
+	std::cout << format_str("char '%.4c' '%.4c'\n", (unsigned char) '&', '&') << std::endl;
+
+	/// ptr
+	printf("ptr %#p %#p\n", (void*) nullptr, &obj);
+	std::cout << format_str("ptr %#p %#p\n", (void*) nullptr, &obj) << std::endl;
+
+	/// bool
+	//printf("bool '%b' '%B' '%#b' '%#B'\n", true, false, false, true); // Does not handle bool
+	std::cout << format_str("bool '%b' '%B' '%#b' '%#B'\n", true, false, false, true) << std::endl;
+	/// bool - Width
+	std::cout << format_str("bool '%10b' '%-10B' '%#10b' '%#-10B'\n", true, false, false, true) << std::endl;
+
+	/// tabular
+	int c0, c1, c2, c3;
+	std::cout << format_str("| id %n",			c0)
+			  << format_str("| name    %n",		c1)
+			  << format_str("| rank %n",		c2)
+			  << format_str("| desc.   %n|\n",	c3);
 	
-	std::cout << format_str("Base and Point:\n%#x\n%#X\n%#f\n\n", 0xc, 0xf, 42.1f);
-
-	std::cout << format_str("Precision:\n%f\n%.1f\n%.2f\n%.3f\n"
-							"%.4f\n%.5f\n%.6f\n%.7f\n\n", 
-							1234.56789, 1234.56789, 1234.56789, 1234.56789, 
-							1234.56789, 1234.56789, 1234.56789, 1234.56789);
-
-	std::cout << format_str("Padding:\n%d\n%1d\n%2d\n%4d\n%8d\n%16d\n\n", 0, 1, 2, 4, 8, 16);
-
-	std::cout << format_str("Alignment:\n%-10d Left Aligned\n%10d Right Aligned\n\n", -10, 10);
-
-	const bool test = true;
-	const std::string testS = "HELLO WORLD";
-	const Test *testP = &obj;
-	std::cout << format_str("Types:\nbool:\n"
-		"%b, %B, %#b, %#B, \n\n"
-		"\nint:\n"
-		"%d, %i, %u, %#o, %#x, %#X, \n\n"
-		"float:\n"
-		"%f, %e, %E, \n%g, %G, %a, %A, \n\n"
-		"double:\n"
-		"%f, %e, %E, \n%g, %G, %a, %A, \n\n"
-		"long double:\n"
-		"%f, %e, %E, \n%g, %G, %a, %A, \n\n"
-		"string, char, ptr, ostream:\n"
-		"\"%-20s\", '%c', %p, %*s\n\n",
-		test, false, true, false,
-		-1, -2, 3u, 4, 12, 15,
-		1.1f, 3.3f, 4.4f, 
-		5.5f, 6.6f, 7.f, 8.f,
-		1.1, 3.3, 4.4, 
-		5.5, 6.6, 7., 8.,
-		1.1L, 3.3L, 4.4L, 
-		5.5L, 6.6L, 7.L, 8.L,
-		testS, '&', testP, 5, obj);
-
-	std::cout << format_str("ostream formatting:\n|%20.6s|\n|%-20s|\n\n", obj, obj);
-
-	unsigned short int a = 0, b = 0;
-	std::cout << format_str("Hello%n world.%n\n%*sSame Format: a = %u b = %u\n", a, b, a, "", a, b);
+	const std::string rowFmt = "| %*d | %-*s | %-*d | %-.*s |\n";
+	std::cout << format_str(rowFmt, c0 - 3, 0, c1 - 3, "Tom",	c2 - 3, 99, c3 - 3, "Lorem...")
+			  << format_str(rowFmt, c0 - 3, 1, c1 - 3, "Dick",	c2 - 3, 50, c3 - 3, "Ipsum...")
+			  << format_str(rowFmt, c0 - 3, 2, c1 - 3, "Harry", c2 - 3, 20, c3 - 3, "Lorem...");
 
 	//std::cout << format_str("Cause an error: %m", 0);
 	//
@@ -122,7 +247,27 @@ int main() {
 	//
 	// Line: 115 File: 'test.cpp'
 	// String Format | Not enough arguments
+
+	//std::cout << format_str("Cause an error: %*d", 0);
+	//
+	// Line: 251 File: 'test.cpp'
+	// String Format | Not enough arguments : Variable width needs '2' arguments. Have '1'
 	
+	//std::cout << format_str("Cause an error: %.*d", 0);
+	//
+	// Line: 256 File: 'test.cpp'
+	// String Format | Not enough arguments : Variable precision needs '2' arguments. Have '1'
+
+	//std::cout << format_str("Cause an error: %*.*d", 0);
+	//
+	// Line: 251 File: 'test.cpp'
+	// String Format | Not enough arguments : Variable width & precision needs '3' arguments. Have '1'
+
+	//std::cout << format_str("Cause an error: %*.*d", 0, 0);
+	//
+	// Line: 251 File: 'test.cpp'
+	// String Format | Not enough arguments : Variable width & precision needs '3' arguments. Have '2'
+
 	//std::cout << format_str("Cause an error: ", 1, 2, 3);
 	//
 	// Line: 120 File: 'test.cpp'
