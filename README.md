@@ -44,12 +44,14 @@ Everything is just like it is with printf! But now you get error handling, typec
 	// vs.
 	std::cout << format_str("Hello world.\n");
 
+---
 
 	/// Writing to stderr
 	fprintf(stderr, "Hello world.\n");
 	// vs.
 	std::cerr << format_str("Hello world.\n");
 
+---
 
 	/// Writing to a string buffer
 	char buf[256];
@@ -57,6 +59,7 @@ Everything is just like it is with printf! But now you get error handling, typec
 	// vs.
 	std::string buf = format_str("a = %d b = %d c = %d\n", 1, 2, 3);
 
+---
 
 	/// Print a struct or class object that has an ostream<< operator
 	struct SomeObject {
