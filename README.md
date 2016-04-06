@@ -36,16 +36,20 @@ Formats follow the form:
 
 
 ## Examples
-	
+
+Everything is just like it is with printf! But now you get error handling, typechecking, security, and dynamic memory which means no more buffer overruns!
+
 	/// Writing to stdout
 	printf("Hello world.\n");
 	// vs.
 	std::cout << format_str("Hello world.\n");
 
+
 	/// Writing to stderr
 	fprintf(stderr, "Hello world.\n");
 	// vs.
 	std::cerr << format_str("Hello world.\n");
+
 
 	/// Writing to a string buffer
 	char buf[256];
@@ -53,7 +57,21 @@ Formats follow the form:
 	// vs.
 	std::string buf = format_str("a = %d b = %d c = %d\n", 1, 2, 3);
 
-Everything is just like it is with printf! But now you get error handling, typechecking, security, and dynamic memory which means no more buffer overruns!
+
+	/// Print a struct or class object that has an ostream<< operator
+	struct SomeObject {
+		int a;
+		double d;
+
+		/// The ostream operator can itself call format_str !
+		friend std::ostream& operator<<(std::ostream& os, const Test &v) {
+			os << format_str("SomeObject{ %i, %f }", v.a, v.d);
+			return os;
+		};
+	};
+	
+	SomeObject obj{ 10, 3.14 };
+	std::cout << format_str("Here is an object: %s\n", obj);
 
 ## Error Handling
 
