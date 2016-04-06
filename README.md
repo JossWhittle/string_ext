@@ -34,6 +34,27 @@ Formats follow the form:
 				p                      (ptr)
 	            b, B                   (bool)
 
+
+## Examples
+	
+	/// Writing to stdout
+	printf("Hello world.\n");
+	// vs.
+	std::cout << format_str("Hello world.\n");
+
+	/// Writing to stderr
+	fprintf(stderr, "Hello world.\n");
+	// vs.
+	std::cerr << format_str("Hello world.\n");
+
+	/// Writing to a string buffer
+	char buf[256];
+	sprintf(buf, "a = %d b = %d c = %d\n", 1, 2, 3);
+	// vs.
+	std::string buf = format_str("a = %d b = %d c = %d\n", 1, 2, 3);
+
+Everything is just like it is with printf! But now you get error handling, typechecking, security, and dynamic memory which means no more buffer overruns!
+
 ## Error Handling
 
 	std::cout << format_str("Cause an error: %m", 0);
