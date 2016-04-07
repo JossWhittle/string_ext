@@ -68,7 +68,7 @@ Everything is just like it is with printf! But now you get error handling, typec
 	   << " c = " << std::defaultfloat	<< 3.456 << "\n";
 	std::string buf = ss.str();
 	// vs.
-	std::string buf = format_str("a = %d b = %d c = %d\n", 1, 2, 3);
+	std::string buf = format_str("a = %f b = %e c = %g\n", 1.234, 2.345, 3.456);
 
 ---
 
