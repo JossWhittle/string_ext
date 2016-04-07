@@ -40,22 +40,33 @@ Formats follow the form:
 Everything is just like it is with printf! But now you get error handling, typechecking, security, and dynamic memory which means no more buffer overruns!
 
 	/// Writing to stdout
-	printf("Hello world.\n");
+	printf("Hello %s.\n", "world");
+	// vs. 
+	std::cout << "Hello " << "world" << ".\n";
 	// vs.
-	std::cout << format_str("Hello world.\n");
+	std::cout << format_str("Hello %s.\n", "world");
 
 ---
 
 	/// Writing to stderr
-	fprintf(stderr, "Hello world.\n");
+	int a = 42;
+	fprintf(stderr, "a = %d\n", a);
+	// vs. 
+	std::cerr << "a = " << a << "\n";
 	// vs.
-	std::cerr << format_str("Hello world.\n");
+	std::cerr << format_str("a = %d\n", a);
 
 ---
 
 	/// Writing to a string buffer
 	char buf[256];
-	sprintf(buf, "a = %d b = %d c = %d\n", 1, 2, 3);
+	sprintf(buf, "a = %f b = %e c = %g\n", 1.234, 2.345, 3.456);
+	// vs.
+	std::ostringstream ss;
+	ss <<  "a = " << std::fixed			<< 1.234 
+	   << " b = " << std::scientific	<< 2.345 
+	   << " c = " << std::defaultfloat	<< 3.456 << "\n";
+	std::string buf = ss.str();
 	// vs.
 	std::string buf = format_str("a = %d b = %d c = %d\n", 1, 2, 3);
 
