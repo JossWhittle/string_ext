@@ -453,7 +453,7 @@ namespace str { /// Main namespace
 		};
 		
 		/// Attempt to capture the current character count printed so far into the referenced int variable
-#define FORMAT_CURRENT_LENGTH(type) inline void _formatCurrentLength(const int _line_, const char *_file_, std::ostringstream &ret, const _Format &f, type &val) { val = (int) ret.str().size(); };
+#define FORMAT_CURRENT_LENGTH(type) inline void _formatCurrentLength(const int _line_, const char *_file_, std::ostringstream &ret, const _Format &f, type &val) { val = (type) ret.str().size(); };
 		
 		FORMAT_CURRENT_LENGTH(int);
 		FORMAT_CURRENT_LENGTH(short int);
