@@ -844,4 +844,4 @@ namespace str { /// Main namespace
 		return str::format(-1, nullptr, fmt, args...);
 	};
 
-}; /// str namespace
+}; /// str namespace 
