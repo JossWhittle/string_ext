@@ -65,53 +65,53 @@ namespace str { /// Main namespace
 
 #define INT_SPEC		"d, i, o, x, X, n"
 #define UINT_SPEC		"u, o, x, X, n"
-#define CONST_INT_SPEC	"d, i, o, x, X"
-#define CONST_UINT_SPEC	"u, o, x, X"
+#define CONST_INT_SPEC		"d, i, o, x, X"
+#define CONST_UINT_SPEC		"u, o, x, X"
 #define FLOAT_SPEC		"f, e, E, g, G, a, A"
 #define STRING_SPEC		"s"
 #define CHAR_SPEC		"c"
 #define PTR_SPEC		"p"
 #define BOOL_SPEC		"b, B"
 
-		SPEC_STRING(int,							INT_SPEC);
-		SPEC_STRING(short int,						INT_SPEC);
-		SPEC_STRING(long int,						INT_SPEC);
-		SPEC_STRING(long long int,					INT_SPEC);
-		SPEC_STRING(unsigned int,					UINT_SPEC);
-		SPEC_STRING(unsigned short int,				UINT_SPEC);
-		SPEC_STRING(unsigned long int,				UINT_SPEC);
-		SPEC_STRING(unsigned long long int,			UINT_SPEC);
-		SPEC_STRING(float,							FLOAT_SPEC);
-		SPEC_STRING(double,							FLOAT_SPEC);
-		SPEC_STRING(long double,					FLOAT_SPEC);
-		SPEC_STRING(std::string,					STRING_SPEC);
+		SPEC_STRING(int,				INT_SPEC);
+		SPEC_STRING(short int,				INT_SPEC);
+		SPEC_STRING(long int,				INT_SPEC);
+		SPEC_STRING(long long int,			INT_SPEC);
+		SPEC_STRING(unsigned int,			UINT_SPEC);
+		SPEC_STRING(unsigned short int,			UINT_SPEC);
+		SPEC_STRING(unsigned long int,			UINT_SPEC);
+		SPEC_STRING(unsigned long long int,		UINT_SPEC);
+		SPEC_STRING(float,				FLOAT_SPEC);
+		SPEC_STRING(double,				FLOAT_SPEC);
+		SPEC_STRING(long double,			FLOAT_SPEC);
+		SPEC_STRING(std::string,			STRING_SPEC);
 		template<typename T>
-		SPEC_STRING(T,								STRING_SPEC);
-		SPEC_STRING(char,							CHAR_SPEC);
-		SPEC_STRING(unsigned char,					CHAR_SPEC);
+		SPEC_STRING(T,					STRING_SPEC);
+		SPEC_STRING(char,				CHAR_SPEC);
+		SPEC_STRING(unsigned char,			CHAR_SPEC);
 		template<typename T>	
-		SPEC_STRING(T*,								PTR_SPEC);
-		SPEC_STRING(bool,							BOOL_SPEC);
+		SPEC_STRING(T*,					PTR_SPEC);
+		SPEC_STRING(bool,				BOOL_SPEC);
 
-		SPEC_STRING(const int,						CONST_INT_SPEC);
-		SPEC_STRING(const short int,				CONST_INT_SPEC);
-		SPEC_STRING(const long int,					CONST_INT_SPEC);
-		SPEC_STRING(const long long int,			CONST_INT_SPEC);
-		SPEC_STRING(const unsigned int,				CONST_UINT_SPEC);
+		SPEC_STRING(const int,				CONST_INT_SPEC);
+		SPEC_STRING(const short int,			CONST_INT_SPEC);
+		SPEC_STRING(const long int,			CONST_INT_SPEC);
+		SPEC_STRING(const long long int,		CONST_INT_SPEC);
+		SPEC_STRING(const unsigned int,			CONST_UINT_SPEC);
 		SPEC_STRING(const unsigned short int,		CONST_UINT_SPEC);
 		SPEC_STRING(const unsigned long int,		CONST_UINT_SPEC);
 		SPEC_STRING(const unsigned long long int,	CONST_UINT_SPEC);
-		SPEC_STRING(const float,					FLOAT_SPEC);
-		SPEC_STRING(const double,					FLOAT_SPEC);
-		SPEC_STRING(const long double,				FLOAT_SPEC);
-		SPEC_STRING(const std::string,				STRING_SPEC);
+		SPEC_STRING(const float,			FLOAT_SPEC);
+		SPEC_STRING(const double,			FLOAT_SPEC);
+		SPEC_STRING(const long double,			FLOAT_SPEC);
+		SPEC_STRING(const std::string,			STRING_SPEC);
 		template<typename T>
-		SPEC_STRING(const T,						STRING_SPEC);
-		SPEC_STRING(const char,						CHAR_SPEC);
-		SPEC_STRING(const unsigned char,			CHAR_SPEC);
+		SPEC_STRING(const T,				STRING_SPEC);
+		SPEC_STRING(const char,				CHAR_SPEC);
+		SPEC_STRING(const unsigned char,		CHAR_SPEC);
 		template<typename T>
-		SPEC_STRING(const T*,						PTR_SPEC);
-		SPEC_STRING(const bool,						BOOL_SPEC);
+		SPEC_STRING(const T*,				PTR_SPEC);
+		SPEC_STRING(const bool,				BOOL_SPEC);
 
 #undef SPEC_STRING
 #undef INT_SPEC
@@ -127,55 +127,55 @@ namespace str { /// Main namespace
 		/// Check if the given type matches the given specifier
 #define CHECK_VAL(type, vstr) inline bool _checkVal(const char specifier, type &val) { return _containsChar(specifier, vstr); };
 		
-#define INT_CHECK			"dioxXn"
-#define UINT_CHECK			"uoxXn"
+#define INT_CHECK		"dioxXn"
+#define UINT_CHECK		"uoxXn"
 #define CONST_INT_CHECK		"dioxX"
 #define CONST_UINT_CHECK	"uoxXn"
-#define FLOAT_CHECK			"feEgGaA"
+#define FLOAT_CHECK		"feEgGaA"
 #define STRING_CHECK		"s"
-#define CHAR_CHECK			"c"
-#define PTR_CHECK			"p"
-#define BOOL_CHECK			"bB"
+#define CHAR_CHECK		"c"
+#define PTR_CHECK		"p"
+#define BOOL_CHECK		"bB"
 
-		CHECK_VAL(int,								INT_CHECK);
-		CHECK_VAL(short int,						INT_CHECK);
-		CHECK_VAL(long int,							INT_CHECK);
-		CHECK_VAL(long long int,					INT_CHECK);
-		CHECK_VAL(unsigned int,						UINT_CHECK);
-		CHECK_VAL(unsigned short int,				UINT_CHECK);
-		CHECK_VAL(unsigned long int,				UINT_CHECK);
-		CHECK_VAL(unsigned long long int,			UINT_CHECK);
-		CHECK_VAL(float,							FLOAT_CHECK);
-		CHECK_VAL(double,							FLOAT_CHECK);
-		CHECK_VAL(long double,						FLOAT_CHECK);
-		CHECK_VAL(std::string,						STRING_CHECK);
+		CHECK_VAL(int,					INT_CHECK);
+		CHECK_VAL(short int,				INT_CHECK);
+		CHECK_VAL(long int,				INT_CHECK);
+		CHECK_VAL(long long int,			INT_CHECK);
+		CHECK_VAL(unsigned int,				UINT_CHECK);
+		CHECK_VAL(unsigned short int,			UINT_CHECK);
+		CHECK_VAL(unsigned long int,			UINT_CHECK);
+		CHECK_VAL(unsigned long long int,		UINT_CHECK);
+		CHECK_VAL(float,				FLOAT_CHECK);
+		CHECK_VAL(double,				FLOAT_CHECK);
+		CHECK_VAL(long double,				FLOAT_CHECK);
+		CHECK_VAL(std::string,				STRING_CHECK);
 		template<typename T>
-		CHECK_VAL(T,								STRING_CHECK);
-		CHECK_VAL(char,								CHAR_CHECK);
-		CHECK_VAL(unsigned char,					CHAR_CHECK);
+		CHECK_VAL(T,					STRING_CHECK);
+		CHECK_VAL(char,					CHAR_CHECK);
+		CHECK_VAL(unsigned char,			CHAR_CHECK);
 		template<typename T>	
-		CHECK_VAL(T*,								PTR_CHECK);
-		CHECK_VAL(bool,								BOOL_CHECK);
+		CHECK_VAL(T*,					PTR_CHECK);
+		CHECK_VAL(bool,					BOOL_CHECK);
 
-		CHECK_VAL(const int,						CONST_INT_CHECK);
-		CHECK_VAL(const short int,					CONST_INT_CHECK);
-		CHECK_VAL(const long int,					CONST_INT_CHECK);
-		CHECK_VAL(const long long int,				CONST_INT_CHECK);
-		CHECK_VAL(const unsigned int,				CONST_UINT_CHECK);
-		CHECK_VAL(const unsigned short int,			CONST_UINT_CHECK);
-		CHECK_VAL(const unsigned long int,			CONST_UINT_CHECK);
+		CHECK_VAL(const int,				CONST_INT_CHECK);
+		CHECK_VAL(const short int,			CONST_INT_CHECK);
+		CHECK_VAL(const long int,			CONST_INT_CHECK);
+		CHECK_VAL(const long long int,			CONST_INT_CHECK);
+		CHECK_VAL(const unsigned int,			CONST_UINT_CHECK);
+		CHECK_VAL(const unsigned short int,		CONST_UINT_CHECK);
+		CHECK_VAL(const unsigned long int,		CONST_UINT_CHECK);
 		CHECK_VAL(const unsigned long long int,		CONST_UINT_CHECK);
-		CHECK_VAL(const float,						FLOAT_CHECK);
-		CHECK_VAL(const double,						FLOAT_CHECK);
-		CHECK_VAL(const long double,				FLOAT_CHECK);
-		CHECK_VAL(const std::string,				STRING_CHECK);
+		CHECK_VAL(const float,				FLOAT_CHECK);
+		CHECK_VAL(const double,				FLOAT_CHECK);
+		CHECK_VAL(const long double,			FLOAT_CHECK);
+		CHECK_VAL(const std::string,			STRING_CHECK);
 		template<typename T>
-		CHECK_VAL(const T,							STRING_CHECK);
-		CHECK_VAL(const char,						CHAR_CHECK);
-		CHECK_VAL(const unsigned char,				CHAR_CHECK);
+		CHECK_VAL(const T,				STRING_CHECK);
+		CHECK_VAL(const char,				CHAR_CHECK);
+		CHECK_VAL(const unsigned char,			CHAR_CHECK);
 		template<typename T>	
-		CHECK_VAL(const T*,							PTR_CHECK);
-		CHECK_VAL(const bool,						BOOL_CHECK);
+		CHECK_VAL(const T*,				PTR_CHECK);
+		CHECK_VAL(const bool,				BOOL_CHECK);
 
 #undef CHECK_VAL
 #undef INT_CHECK			
@@ -190,7 +190,7 @@ namespace str { /// Main namespace
 
 		/// Convert template typed argument to format width/precision int if appropriate conversion
 #define WIDTH_ARG(type) inline int _widthArg(    const int _line_, const char *_file_, type &arg) { return (int) arg; } \
-						inline int _precisionArg(const int _line_, const char *_file_, type &arg) { return (int) arg; };
+			inline int _precisionArg(const int _line_, const char *_file_, type &arg) { return (int) arg; };
 
 		WIDTH_ARG(int);
 		WIDTH_ARG(short int);
@@ -348,7 +348,7 @@ namespace str { /// Main namespace
 			if (!_containsChar(fmt.specifier, "diuoxXnfeEgGaAscpbB")) {
 				_printDebug(_line_, _file_);
 				std::cerr << "String Format | Undefined format specifier: '"
-						  << _escape(fmt.specifier) << '\'' << std::endl << std::endl;
+					  << _escape(fmt.specifier) << '\'' << std::endl << std::endl;
 				std::exit(EXIT_FAILURE);
 			}
 			return fmt;
@@ -497,7 +497,7 @@ namespace str { /// Main namespace
 			if (!_checkVal(f.specifier, val)) {
 				_printDebug(_line_, _file_);
 				std::cerr << "String Format | Incorrect format specifier for type (" << typeid(val).name() << "): Saw '" << f.specifier
-						  << "' | Expected '" << _specString(val) << '\'' << std::endl << std::endl;
+					  << "' | Expected '" << _specString(val) << '\'' << std::endl << std::endl;
 				std::exit(EXIT_FAILURE);
 			}
 
@@ -785,8 +785,8 @@ namespace str { /// Main namespace
 				//_format(_line_, _file_, ret, fmtS, fmtE); //  remaining args... are discarded
 
 				_printDebug(_line_, _file_);
-				std::cerr << "String Format | Unused arguments: '"
-						  << (1u + _numArgs(args...)) << '\'' << std::endl << std::endl;
+				std::cerr << "String Format | Unused arguments: '" 
+					  << (1u + _numArgs(args...)) << '\'' << std::endl << std::endl;
 				std::exit(EXIT_FAILURE);
 			}
 			else {

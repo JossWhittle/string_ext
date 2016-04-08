@@ -218,15 +218,15 @@ int main() {
 
 	/// tabular
 	int c0, c1, c2, c3;
-	std::cout << format_str("| id %n",			c0)
-			  << format_str("| name    %n",		c1)
-			  << format_str("| rank %n",		c2)
-			  << format_str("| desc.   %n|\n",	c3);
+	std::cout << format_str("| id %n",		c0)
+		  << format_str("| name    %n",		c1)
+		  << format_str("| rank %n",		c2)
+		  << format_str("| desc.   %n|\n",	c3);
 	
 	const std::string rowFmt = "| %*d | %-*s | %-*d | %-.*s |\n";
-	std::cout << format_str(rowFmt, c0 - 3, 0, c1 - 3, "Tom",	c2 - 3, 99, c3 - 3, "Lorem...")
-			  << format_str(rowFmt, c0 - 3, 1, c1 - 3, "Dick",	c2 - 3, 50, c3 - 3, "Ipsum...")
-			  << format_str(rowFmt, c0 - 3, 2, c1 - 3, "Harry", c2 - 3, 20, c3 - 3, "Lorem...");
+	std::cout << format_str(rowFmt, c0 - 3, 0, c1 - 3, "Tom",   c2 - 3, 99, c3 - 3, "Lorem...")
+		  << format_str(rowFmt, c0 - 3, 1, c1 - 3, "Dick",  c2 - 3, 50, c3 - 3, "Ipsum...")
+		  << format_str(rowFmt, c0 - 3, 2, c1 - 3, "Harry", c2 - 3, 20, c3 - 3, "Lorem...");
 
 	//std::cout << format_str("Cause an error: %m", 0);
 	//
