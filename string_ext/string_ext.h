@@ -61,79 +61,57 @@ namespace str { /// Main namespace
 		};
 
 		/// Get the valid specifiers for a given type
-		inline std::string _specString(int &val)						
-		{ return "d, i, o, x, X, n"; };
-		inline std::string _specString(short int &val)					
-		{ return "d, i, o, x, X, n"; };
-		inline std::string _specString(long int &val)					
-		{ return "d, i, o, x, X, n"; };
-		inline std::string _specString(long long int &val)				
-		{ return "d, i, o, x, X, n"; };
-		inline std::string _specString(unsigned int &val)				
-		{ return "u, o, x, X, n"; };
-		inline std::string _specString(unsigned short int &val)			
-		{ return "u, o, x, X, n"; };
-		inline std::string _specString(unsigned long int &val)			
-		{ return "u, o, x, X, n"; };
-		inline std::string _specString(unsigned long long int &val)		
-		{ return "u, o, x, X, n"; };
-		inline std::string _specString(float &val)						
-		{ return "f, e, E, g, G, a, A"; };
-		inline std::string _specString(double &val)						
-		{ return "f, e, E, g, G, a, A"; };
-		inline std::string _specString(long double &val)				
-		{ return "f, e, E, g, G, a, A"; };
-		inline std::string _specString(std::string &val)				
-		{ return "s"; };
-		template<typename T>
-		inline std::string _specString(T &val)							
-		{ return "s"; };
-		inline std::string _specString(char &val)						
-		{ return "c"; };
-		inline std::string _specString(unsigned char &val)						
-		{ return "c"; };
-		template<typename T>
-		inline std::string _specString(T *&val)							
-		{ return "p"; };
-		inline std::string _specString(bool &val)						
-		{ return "b, B"; };
+#define SPEC_STRING(type, vstr) inline std::string _specString( type &val) { return vstr ; }
 
-		inline std::string _specString(const int &val)						
-		{ return "d, i, o, x, X"; };
-		inline std::string _specString(const short int &val)					
-		{ return "d, i, o, x, X"; };
-		inline std::string _specString(const long int &val)					
-		{ return "d, i, o, x, X"; };
-		inline std::string _specString(const long long int &val)				
-		{ return "d, i, o, x, X"; };
-		inline std::string _specString(const unsigned int &val)				
-		{ return "u, o, x, X"; };
-		inline std::string _specString(const unsigned short int &val)			
-		{ return "u, o, x, X"; };
-		inline std::string _specString(const unsigned long int &val)			
-		{ return "u, o, x, X"; };
-		inline std::string _specString(const unsigned long long int &val)		
-		{ return "u, o, x, X"; };
-		inline std::string _specString(const float &val)						
-		{ return "f, e, E, g, G, a, A"; };
-		inline std::string _specString(const double &val)						
-		{ return "f, e, E, g, G, a, A"; };
-		inline std::string _specString(const long double &val)				
-		{ return "f, e, E, g, G, a, A"; };
-		inline std::string _specString(const std::string &val)				
-		{ return "s"; };
+#define INT_SPEC		"d, i, o, x, X, n"
+#define UINT_SPEC		"u, o, x, X, n"
+#define CONST_INT_SPEC	"d, i, o, x, X"
+#define CONST_UINT_SPEC	"u, o, x, X"
+#define FLOAT_SPEC		"f, e, E, g, G, a, A"
+#define STRING_SPEC		"s"
+#define CHAR_SPEC		"c"
+#define PTR_SPEC		"p"
+#define BOOL_SPEC		"b, B"
+
+		SPEC_STRING(int,							INT_SPEC);
+		SPEC_STRING(short int,						INT_SPEC);
+		SPEC_STRING(long int,						INT_SPEC);
+		SPEC_STRING(long long int,					INT_SPEC);
+		SPEC_STRING(unsigned int,					UINT_SPEC);
+		SPEC_STRING(unsigned short int,				UINT_SPEC);
+		SPEC_STRING(unsigned long int,				UINT_SPEC);
+		SPEC_STRING(unsigned long long int,			UINT_SPEC);
+		SPEC_STRING(float,							FLOAT_SPEC);
+		SPEC_STRING(double,							FLOAT_SPEC);
+		SPEC_STRING(long double,					FLOAT_SPEC);
+		SPEC_STRING(std::string,					STRING_SPEC);
 		template<typename T>
-		inline std::string _specString(const T &val)							
-		{ return "s"; };
-		inline std::string _specString(const char &val)						
-		{ return "c"; };
-		inline std::string _specString(const unsigned char &val)						
-		{ return "c"; };
+		SPEC_STRING(T,								STRING_SPEC);
+		SPEC_STRING(char,							CHAR_SPEC);
+		SPEC_STRING(unsigned char,					CHAR_SPEC);
+		template<typename T>	
+		SPEC_STRING(T*,								PTR_SPEC);
+		SPEC_STRING(bool,							BOOL_SPEC);
+
+		SPEC_STRING(const int,						CONST_INT_SPEC);
+		SPEC_STRING(const short int,				CONST_INT_SPEC);
+		SPEC_STRING(const long int,					CONST_INT_SPEC);
+		SPEC_STRING(const long long int,			CONST_INT_SPEC);
+		SPEC_STRING(const unsigned int,				CONST_UINT_SPEC);
+		SPEC_STRING(const unsigned short int,		CONST_UINT_SPEC);
+		SPEC_STRING(const unsigned long int,		CONST_UINT_SPEC);
+		SPEC_STRING(const unsigned long long int,	CONST_UINT_SPEC);
+		SPEC_STRING(const float,					FLOAT_SPEC);
+		SPEC_STRING(const double,					FLOAT_SPEC);
+		SPEC_STRING(const long double,				FLOAT_SPEC);
+		SPEC_STRING(const std::string,				STRING_SPEC);
 		template<typename T>
-		inline std::string _specString(const T *&val)							
-		{ return "p"; };
-		inline std::string _specString(const bool &val)						
-		{ return "b, B"; };
+		SPEC_STRING(const T,						STRING_SPEC);
+		SPEC_STRING(const char,						CHAR_SPEC);
+		SPEC_STRING(const unsigned char,			CHAR_SPEC);
+		template<typename T>
+		SPEC_STRING(const T*,						PTR_SPEC);
+		SPEC_STRING(const bool,						BOOL_SPEC);
 
 		/// Check if the given type matches the given specifier
 		inline bool _checkVal(const char specifier, int &val)						
