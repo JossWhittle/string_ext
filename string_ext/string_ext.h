@@ -113,82 +113,104 @@ namespace str { /// Main namespace
 		SPEC_STRING(const T*,						PTR_SPEC);
 		SPEC_STRING(const bool,						BOOL_SPEC);
 
+#undef SPEC_STRING
+#undef INT_SPEC
+#undef UINT_SPEC		
+#undef CONST_INT_SPEC	
+#undef CONST_UINT_SPEC	
+#undef FLOAT_SPEC		
+#undef STRING_SPEC		
+#undef CHAR_SPEC	
+#undef PTR_SPEC		
+#undef BOOL_SPEC		
+
 		/// Check if the given type matches the given specifier
-		inline bool _checkVal(const char specifier, int &val)						
-		{ return _containsChar(specifier, "dioxXn"); };
-		inline bool _checkVal(const char specifier, short int &val)					
-		{ return _containsChar(specifier, "dioxXn"); };
-		inline bool _checkVal(const char specifier, long int &val)					
-		{ return _containsChar(specifier, "dioxXn"); };
-		inline bool _checkVal(const char specifier, long long int &val)				
-		{ return _containsChar(specifier, "dioxXn"); };
-		inline bool _checkVal(const char specifier, unsigned int &val)				
-		{ return _containsChar(specifier, "uoxXn"); };
-		inline bool _checkVal(const char specifier, unsigned short int &val)		
-		{ return _containsChar(specifier, "uoxXn"); };
-		inline bool _checkVal(const char specifier, unsigned long int &val)			
-		{ return _containsChar(specifier, "uoxXn"); };
-		inline bool _checkVal(const char specifier, unsigned long long int &val)	
-		{ return _containsChar(specifier, "uoxXn"); };
-		inline bool _checkVal(const char specifier, float &val)						
-		{ return _containsChar(specifier, "feEgGaA"); };
-		inline bool _checkVal(const char specifier, double &val)					
-		{ return _containsChar(specifier, "feEgGaA"); };
-		inline bool _checkVal(const char specifier, long double &val)				
-		{ return _containsChar(specifier, "feEgGaA"); };
-		inline bool _checkVal(const char specifier, std::string &val)				
-		{ return specifier == 's'; };
-		template<class T>
-		inline bool _checkVal(const char specifier, T &val)							
-		{ return specifier == 's'; };
-		inline bool _checkVal(const char specifier, char &val)						
-		{ return specifier == 'c'; };
-		inline bool _checkVal(const char specifier, unsigned char &val)						
-		{ return specifier == 'c'; };
-		template<typename T>
-		inline bool _checkVal(const char specifier, T *&val)						
-		{ return specifier == 'p'; };
-		inline bool _checkVal(const char specifier, bool &val)						
-		{ return _containsChar(specifier, "bB"); };
+#define CHECK_VAL(type, vstr) inline bool _checkVal(const char specifier, type &val) { return _containsChar(specifier, vstr); };
+		
+#define INT_CHECK			"dioxXn"
+#define UINT_CHECK			"uoxXn"
+#define CONST_INT_CHECK		"dioxX"
+#define CONST_UINT_CHECK	"uoxXn"
+#define FLOAT_CHECK			"feEgGaA"
+#define STRING_CHECK		"s"
+#define CHAR_CHECK			"c"
+#define PTR_CHECK			"p"
+#define BOOL_CHECK			"bB"
 
-		inline bool _checkVal(const char specifier, const int &val)						
-		{ return _containsChar(specifier, "dioxX"); };
-		inline bool _checkVal(const char specifier, const short int &val)					
-		{ return _containsChar(specifier, "dioxX"); };
-		inline bool _checkVal(const char specifier, const long int &val)					
-		{ return _containsChar(specifier, "dioxX"); };
-		inline bool _checkVal(const char specifier, const long long int &val)				
-		{ return _containsChar(specifier, "dioxX"); };
-		inline bool _checkVal(const char specifier, const unsigned int &val)				
-		{ return _containsChar(specifier, "uoxX"); };
-		inline bool _checkVal(const char specifier, const unsigned short int &val)		
-		{ return _containsChar(specifier, "uoxX"); };
-		inline bool _checkVal(const char specifier, const unsigned long int &val)			
-		{ return _containsChar(specifier, "uoxX"); };
-		inline bool _checkVal(const char specifier, const unsigned long long int &val)	
-		{ return _containsChar(specifier, "uoxX"); };
-		inline bool _checkVal(const char specifier, const float &val)						
-		{ return _containsChar(specifier, "feEgGaA"); };
-		inline bool _checkVal(const char specifier, const double &val)					
-		{ return _containsChar(specifier, "feEgGaA"); };
-		inline bool _checkVal(const char specifier, const long double &val)				
-		{ return _containsChar(specifier, "feEgGaA"); };
-		inline bool _checkVal(const char specifier, const std::string &val)				
-		{ return specifier == 's'; };
-		template<class T>
-		inline bool _checkVal(const char specifier, const T &val)							
-		{ return specifier == 's'; };
-		inline bool _checkVal(const char specifier, const char &val)						
-		{ return specifier == 'c'; };
-		inline bool _checkVal(const char specifier, const unsigned char &val)						
-		{ return specifier == 'c'; };
+		CHECK_VAL(int,								INT_CHECK);
+		CHECK_VAL(short int,						INT_CHECK);
+		CHECK_VAL(long int,							INT_CHECK);
+		CHECK_VAL(long long int,					INT_CHECK);
+		CHECK_VAL(unsigned int,						UINT_CHECK);
+		CHECK_VAL(unsigned short int,				UINT_CHECK);
+		CHECK_VAL(unsigned long int,				UINT_CHECK);
+		CHECK_VAL(unsigned long long int,			UINT_CHECK);
+		CHECK_VAL(float,							FLOAT_CHECK);
+		CHECK_VAL(double,							FLOAT_CHECK);
+		CHECK_VAL(long double,						FLOAT_CHECK);
+		CHECK_VAL(std::string,						STRING_CHECK);
 		template<typename T>
-		inline bool _checkVal(const char specifier, const T *&val)						
-		{ return specifier == 'p'; };
-		inline bool _checkVal(const char specifier, const bool &val)						
-		{ return _containsChar(specifier, "bB"); };
+		CHECK_VAL(T,								STRING_CHECK);
+		CHECK_VAL(char,								CHAR_CHECK);
+		CHECK_VAL(unsigned char,					CHAR_CHECK);
+		template<typename T>	
+		CHECK_VAL(T*,								PTR_CHECK);
+		CHECK_VAL(bool,								BOOL_CHECK);
 
-		/// Convert template typed argument to format width int if appropriate conversion
+		CHECK_VAL(const int,						CONST_INT_CHECK);
+		CHECK_VAL(const short int,					CONST_INT_CHECK);
+		CHECK_VAL(const long int,					CONST_INT_CHECK);
+		CHECK_VAL(const long long int,				CONST_INT_CHECK);
+		CHECK_VAL(const unsigned int,				CONST_UINT_CHECK);
+		CHECK_VAL(const unsigned short int,			CONST_UINT_CHECK);
+		CHECK_VAL(const unsigned long int,			CONST_UINT_CHECK);
+		CHECK_VAL(const unsigned long long int,		CONST_UINT_CHECK);
+		CHECK_VAL(const float,						FLOAT_CHECK);
+		CHECK_VAL(const double,						FLOAT_CHECK);
+		CHECK_VAL(const long double,				FLOAT_CHECK);
+		CHECK_VAL(const std::string,				STRING_CHECK);
+		template<typename T>
+		CHECK_VAL(const T,							STRING_CHECK);
+		CHECK_VAL(const char,						CHAR_CHECK);
+		CHECK_VAL(const unsigned char,				CHAR_CHECK);
+		template<typename T>	
+		CHECK_VAL(const T*,							PTR_CHECK);
+		CHECK_VAL(const bool,						BOOL_CHECK);
+
+#undef CHECK_VAL
+#undef INT_CHECK			
+#undef UINT_CHECK			
+#undef CONST_INT_CHECK		
+#undef CONST_UINT_CHECK	
+#undef FLOAT_CHECK			
+#undef STRING_CHECK		
+#undef CHAR_CHECK			
+#undef PTR_CHECK			
+#undef BOOL_CHECK			
+
+		/// Convert template typed argument to format width/precision int if appropriate conversion
+#define WIDTH_ARG(type) inline int _widthArg(    const int _line_, const char *_file_, type &arg) { return (int) arg; } \
+						inline int _precisionArg(const int _line_, const char *_file_, type &arg) { return (int) arg; };
+
+		WIDTH_ARG(int);
+		WIDTH_ARG(short int);
+		WIDTH_ARG(long int);
+		WIDTH_ARG(long long int);
+		WIDTH_ARG(unsigned int);
+		WIDTH_ARG(unsigned short int);
+		WIDTH_ARG(unsigned long int);
+		WIDTH_ARG(unsigned long long int);
+
+		WIDTH_ARG(const int);
+		WIDTH_ARG(const short int);
+		WIDTH_ARG(const long int);
+		WIDTH_ARG(const long long int);
+		WIDTH_ARG(const unsigned int);
+		WIDTH_ARG(const unsigned short int);
+		WIDTH_ARG(const unsigned long int);
+		WIDTH_ARG(const unsigned long long int);
+
+		/// Error for all types but int family
 		template<typename T>
 		inline int _widthArg(const int _line_, const char *_file_, T &arg) {
 			_printDebug(_line_, _file_);
@@ -196,40 +218,6 @@ namespace str { /// Main namespace
 			std::exit(EXIT_FAILURE);
 			return 0;
 		};
-		inline int _widthArg(const int _line_, const char *_file_, int &arg) 
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, short int &arg) 
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, long int &arg) 
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, long long int &arg) 
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, unsigned int &arg) 
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, unsigned short int &arg)
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, unsigned long int &arg)
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, unsigned long long int &arg)
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, const int &arg) 
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, const short int &arg)
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, const long int &arg)
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, const long long int &arg)
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, const unsigned int &arg)
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, const unsigned short int &arg)
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, const unsigned long int &arg)
-		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, const unsigned long long int &arg)
-		{ return (int) arg; };
-
-		/// Convert template typed argument to format precision int if appropriate conversion
 		template<typename T>
 		inline int _precisionArg(const int _line_, const char *_file_, T &arg) {
 			_printDebug(_line_, _file_);
@@ -237,38 +225,8 @@ namespace str { /// Main namespace
 			std::exit(EXIT_FAILURE);
 			return 0;
 		};
-		inline int _precisionArg(const int _line_, const char *_file_, int &arg) 
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, short int &arg) 
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, long int &arg) 
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, long long int &arg) 
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, unsigned int &arg) 
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, unsigned short int &arg)
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, unsigned long int &arg)
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, unsigned long long int &arg)
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, const int &arg) 
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, const short int &arg)
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, const long int &arg)
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, const long long int &arg)
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, const unsigned int &arg)
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, const unsigned short int &arg)
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, const unsigned long int &arg)
-		{ return (int) arg; };
-		inline int _precisionArg(const int _line_, const char *_file_, const unsigned long long int &arg)
-		{ return (int) arg; };
+
+#undef WIDTH_ARG
 
 		/// Structure to hold formatting info
 		struct _Format {
