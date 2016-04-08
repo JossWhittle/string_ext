@@ -453,6 +453,18 @@ namespace str { /// Main namespace
 		};
 		
 		/// Attempt to capture the current character count printed so far into the referenced int variable
+#define FORMAT_CURRENT_LENGTH(type) inline void _formatCurrentLength(const int _line_, const char *_file_, std::ostringstream &ret, const _Format &f, type &val) { val = (int) ret.str().size(); };
+		
+		FORMAT_CURRENT_LENGTH(int);
+		FORMAT_CURRENT_LENGTH(short int);
+		FORMAT_CURRENT_LENGTH(long int);
+		FORMAT_CURRENT_LENGTH(long long int);
+		FORMAT_CURRENT_LENGTH(unsigned int);
+		FORMAT_CURRENT_LENGTH(unsigned short int);
+		FORMAT_CURRENT_LENGTH(unsigned long int);
+		FORMAT_CURRENT_LENGTH(unsigned long long int);
+
+		/// Error for all types but int family
 		template<typename T>
 		inline void _formatCurrentLength(const int _line_, const char *_file_,
 			std::ostringstream &ret,
@@ -462,22 +474,8 @@ namespace str { /// Main namespace
 			std::cerr << "String Format | _formatCurrentLength called with (" << typeid(val).name() << ")" << std::endl << std::endl;
 			std::exit(EXIT_FAILURE);
 		};
-		inline void _formatCurrentLength(const int _line_, const char *_file_, std::ostringstream &ret, const _Format &f, int &val) 
-		{ val = (int) ret.str().size(); };
-		inline void _formatCurrentLength(const int _line_, const char *_file_, std::ostringstream &ret, const _Format &f, short int &val) 
-		{ val = (short int) ret.str().size(); };
-		inline void _formatCurrentLength(const int _line_, const char *_file_, std::ostringstream &ret, const _Format &f, long int &val) 
-		{ val = (long int) ret.str().size(); };
-		inline void _formatCurrentLength(const int _line_, const char *_file_, std::ostringstream &ret, const _Format &f, long long int &val) 
-		{ val = (long long int) ret.str().size(); };
-		inline void _formatCurrentLength(const int _line_, const char *_file_, std::ostringstream &ret, const _Format &f, unsigned int &val) 
-		{ val = (unsigned int) ret.str().size(); };
-		inline void _formatCurrentLength(const int _line_, const char *_file_, std::ostringstream &ret, const _Format &f, unsigned short int &val) 
-		{ val = (unsigned short int) ret.str().size(); };
-		inline void _formatCurrentLength(const int _line_, const char *_file_, std::ostringstream &ret, const _Format &f, unsigned long int &val) 
-		{ val = (unsigned long int) ret.str().size(); };
-		inline void _formatCurrentLength(const int _line_, const char *_file_, std::ostringstream &ret, const _Format &f, unsigned long long int &val) 
-		{ val = (unsigned long long int) ret.str().size(); };
+
+#undef FORMAT_CURRENT_LENGTH
 
 		/**
 		* Handle formatting once possible width/precision arguments have been handled
