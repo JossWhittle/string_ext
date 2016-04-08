@@ -779,9 +779,6 @@ namespace str { /// Main namespace
 			/// Find the next format delimiter
 			auto pos = std::find(fmtS, fmtE, '%');
 			if (pos == fmtE) {
-				/// If no delimiter is found print the rest of the fmt string blindly
-				//_format(_line_, _file_, ret, fmtS, fmtE); //  remaining args... are discarded
-
 				_printDebug(_line_, _file_);
 				std::cerr << "String Format | Unused arguments: '" 
 					  << (1u + _numArgs(args...)) << '\'' << std::endl << std::endl;
