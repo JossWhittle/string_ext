@@ -525,7 +525,7 @@ namespace str { /// Main namespace
                                 break;
                         case 'a':
                         case 'A':
-                                ret << std::hexfloat;
+                                ret << std::hexfloat; 
                                 break;
                         case 'e':
                         case 'E':
