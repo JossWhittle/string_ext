@@ -101,7 +101,7 @@ namespace str { /// Main namespace
 		{ return "c"; };
 		inline std::string _specString(unsigned char &val)						
 		{ return "c"; };
-		template<typename T>
+		template<typename T> 
 		inline std::string _specString(T *&val)							
 		{ return "p"; };
 		inline std::string _specString(bool &val)						
