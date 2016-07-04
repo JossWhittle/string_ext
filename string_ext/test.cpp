@@ -1,26 +1,25 @@
 /*
+The MIT License(MIT)
 
-Copyright (C) 2016, Joss Whittle
+Copyright(c) 2016 Joss Whittle
 
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the "Software"),
-to deal in the Software without restriction, including without limitation
-the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files(the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions :
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-
-
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 #include "string_ext.h"
@@ -56,7 +55,7 @@ int main() {
 	//            # (show base or decimal) 
 	//
 	// specifier: d, i, u, o, x, X, n    (int)
-	//            f, e, E, g, G, a, A    (float / double / long double)
+	//            f, e, E, g, G	         (float / double / long double)
 	//            s                      (string / ostream<<), 
 	//            c                      (char), 
 	//            p                      (ptr)
@@ -161,28 +160,6 @@ int main() {
 	printf("float-g '%+g' '%+g' '%g' '%g'\n", -1.f, 2.f, -1.f, 2.f);
 	std::cout << format_str("float-g '%+g' '%+g' '%g' '%g'\n", -1.f, 2.f, -1.f, 2.f) << std::endl;
 
-	/// float-a
-	printf("float-a %a %A\n", 3.14f, 3.14f);
-	std::cout << format_str("float-a %a %A\n", 3.14f, 3.14f) << std::endl;
-	/// float-a - Types
-	printf("float-a %.16a %.16a %.16La\n", 1.23456789f, 1.23456789, 1.23456789L); // Need to use L modifier for long double
-	std::cout << format_str("float-a %.16a %.16a %.16a\n", 1.23456789f, 1.23456789, 1.23456789L) << std::endl; // Types determined automatically!
-	/// float-a - Base
-	printf("float-a %#a %a %#a %a %#a\n", 3.14, 2., 2., 2.0, 2.0); 
-	std::cout << format_str("float-a %#a %a %#a %a %#a\n", 3.14, 2., 2., 2.0, 2.0) << std::endl;
-	/// float-a - Width
-	printf("float-a |%1a|%2a|%4a|%8a|%16a|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
-	std::cout << format_str("float-a |%1a|%2a|%4a|%8a|%16a|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
-	/// float-a - Precision
-	printf("float-a |%.1a|%.2a|%.4a|%.8a|%.16a|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
-	std::cout << format_str("float-a |%.1a|%.2a|%.4a|%.8a|%.16a|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
-	/// float-a - Width / Precision
-	printf("float-a |%10.1a|%10.2a|%10.4a|%10.8a|%10.16a|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789);
-	std::cout << format_str("float-a |%10.1a|%10.2a|%10.4a|%10.8a|%10.16a|\n", 12345.6789, 12345.6789, 12345.6789, 12345.6789, 12345.6789) << std::endl;
-	/// float-a - Sign
-	printf("float-a '%+a' '%+a' '%a' '%a'\n", -1.f, 2.f, -1.f, 2.f);
-	std::cout << format_str("float-a '%+a' '%+a' '%a' '%a'\n", -1.f, 2.f, -1.f, 2.f) << std::endl;
-
 	/// string
 	printf("string '%s'\n", "Hello world");
 	std::cout << format_str("string '%s'\n", "Hello world") << std::endl;
@@ -236,7 +213,7 @@ int main() {
 	//std::cout << format_str("Cause an error: %i", 0.f);
 	//
 	// Line: 105 File: 'test.cpp'
-	// String Format | Incorrect format specifier for type (float): Saw 'i' | Expected 'f, e, E, g, G, a, A'
+	// String Format | Incorrect format specifier for type (float): Saw 'i' | Expected 'f, e, E, g, G'
 	
 	//std::cout << format_str("Cause an error: %");
 	//

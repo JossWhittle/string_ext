@@ -1,26 +1,25 @@
 /*
+The MIT License(MIT)
 
-Copyright (C) 2016, Joss Whittle
+Copyright(c) 2016 Joss Whittle
 
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the "Software"),
-to deal in the Software without restriction, including without limitation
-the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files(the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions :
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-
-
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 #pragma once
@@ -30,6 +29,9 @@ DEALINGS IN THE SOFTWARE.
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include <typeinfo>
+#include <algorithm>
+#include <ios>
 
 namespace str { /// Main namespace
 	namespace imp { /// Implementation namespace
@@ -43,6 +45,13 @@ namespace str { /// Main namespace
 		/// Check if string contains specifier
 		inline bool _containsChar(const char specifier, const std::string &str) {
 			return std::find(str.begin(), str.end(), specifier) != str.end();
+		};
+
+		inline char* _findChar(char *fmtS, char *fmtE, char delim) {
+			for (char *pos = fmtS; pos != fmtE; ++pos) {
+				if (*pos == delim) return pos;
+			}
+			return fmtE;
 		};
 
 		/// Escape char for debugging
@@ -78,11 +87,11 @@ namespace str { /// Main namespace
 		inline std::string _specString(unsigned long long int &val)		
 		{ return "u, o, x, X, n"; };
 		inline std::string _specString(float &val)						
-		{ return "f, e, E, g, G, a, A"; };
+		{ return "f, e, E, g, G"; };
 		inline std::string _specString(double &val)						
-		{ return "f, e, E, g, G, a, A"; };
+		{ return "f, e, E, g, G"; };
 		inline std::string _specString(long double &val)				
-		{ return "f, e, E, g, G, a, A"; };
+		{ return "f, e, E, g, G"; };
 		inline std::string _specString(std::string &val)				
 		{ return "s"; };
 		template<typename T>
@@ -115,11 +124,11 @@ namespace str { /// Main namespace
 		inline std::string _specString(const unsigned long long int &val)		
 		{ return "u, o, x, X"; };
 		inline std::string _specString(const float &val)						
-		{ return "f, e, E, g, G, a, A"; };
+		{ return "f, e, E, g, G"; };
 		inline std::string _specString(const double &val)						
-		{ return "f, e, E, g, G, a, A"; };
+		{ return "f, e, E, g, G"; };
 		inline std::string _specString(const long double &val)				
-		{ return "f, e, E, g, G, a, A"; };
+		{ return "f, e, E, g, G"; };
 		inline std::string _specString(const std::string &val)				
 		{ return "s"; };
 		template<typename T>
@@ -153,23 +162,19 @@ namespace str { /// Main namespace
 		inline bool _checkVal(const char specifier, unsigned long long int &val)	
 		{ return _containsChar(specifier, "uoxXn"); };
 		inline bool _checkVal(const char specifier, float &val)						
-		{ return _containsChar(specifier, "feEgGaA"); };
+		{ return _containsChar(specifier, "feEgG"); };
 		inline bool _checkVal(const char specifier, double &val)					
-		{ return _containsChar(specifier, "feEgGaA"); };
+		{ return _containsChar(specifier, "feEgG"); };
 		inline bool _checkVal(const char specifier, long double &val)				
-		{ return _containsChar(specifier, "feEgGaA"); };
+		{ return _containsChar(specifier, "feEgG"); };
 		inline bool _checkVal(const char specifier, std::string &val)				
 		{ return specifier == 's'; };
-		template<class T>
-		inline bool _checkVal(const char specifier, T &val)							
-		{ return specifier == 's'; };
+		
 		inline bool _checkVal(const char specifier, char &val)						
 		{ return specifier == 'c'; };
 		inline bool _checkVal(const char specifier, unsigned char &val)						
 		{ return specifier == 'c'; };
-		template<typename T>
-		inline bool _checkVal(const char specifier, T *&val)						
-		{ return specifier == 'p'; };
+		
 		inline bool _checkVal(const char specifier, bool &val)						
 		{ return _containsChar(specifier, "bB"); };
 
@@ -190,34 +195,35 @@ namespace str { /// Main namespace
 		inline bool _checkVal(const char specifier, const unsigned long long int &val)	
 		{ return _containsChar(specifier, "uoxX"); };
 		inline bool _checkVal(const char specifier, const float &val)						
-		{ return _containsChar(specifier, "feEgGaA"); };
+		{ return _containsChar(specifier, "feEgG"); };
 		inline bool _checkVal(const char specifier, const double &val)					
-		{ return _containsChar(specifier, "feEgGaA"); };
+		{ return _containsChar(specifier, "feEgG"); };
 		inline bool _checkVal(const char specifier, const long double &val)				
-		{ return _containsChar(specifier, "feEgGaA"); };
+		{ return _containsChar(specifier, "feEgG"); };
 		inline bool _checkVal(const char specifier, const std::string &val)				
 		{ return specifier == 's'; };
-		template<class T>
-		inline bool _checkVal(const char specifier, const T &val)							
-		{ return specifier == 's'; };
+		
 		inline bool _checkVal(const char specifier, const char &val)						
 		{ return specifier == 'c'; };
 		inline bool _checkVal(const char specifier, const unsigned char &val)						
 		{ return specifier == 'c'; };
-		template<typename T>
-		inline bool _checkVal(const char specifier, const T *&val)						
-		{ return specifier == 'p'; };
+		
 		inline bool _checkVal(const char specifier, const bool &val)						
 		{ return _containsChar(specifier, "bB"); };
 
-		/// Convert template typed argument to format width int if appropriate conversion
+		template<class T>
+		inline bool _checkVal(const char specifier, T &val)							
+		{ return specifier == 's'; };
 		template<typename T>
-		inline int _widthArg(const int _line_, const char *_file_, T &arg) {
-			_printDebug(_line_, _file_);
-			std::cerr << "String Format | Invalid width argument: (" << typeid(arg).name() << ")" << std::endl << std::endl;
-			std::exit(EXIT_FAILURE);
-			return 0;
-		};
+		inline bool _checkVal(const char specifier, T *&val)						
+		{ return specifier == 'p'; };
+		template<class T>
+		inline bool _checkVal(const char specifier, const T &val)							
+		{ return specifier == 's'; };
+		template<typename T>
+		inline bool _checkVal(const char specifier, const T *&val)						
+		{ return specifier == 'p'; };
+
 		inline int _widthArg(const int _line_, const char *_file_, int &arg) 
 		{ return (int) arg; };
 		inline int _widthArg(const int _line_, const char *_file_, short int &arg) 
@@ -234,7 +240,7 @@ namespace str { /// Main namespace
 		{ return (int) arg; };
 		inline int _widthArg(const int _line_, const char *_file_, unsigned long long int &arg)
 		{ return (int) arg; };
-		inline int _widthArg(const int _line_, const char *_file_, const int &arg) 
+		inline int _widthArg(const int _line_, const char *_file_, const int &arg)
 		{ return (int) arg; };
 		inline int _widthArg(const int _line_, const char *_file_, const short int &arg)
 		{ return (int) arg; };
@@ -251,14 +257,15 @@ namespace str { /// Main namespace
 		inline int _widthArg(const int _line_, const char *_file_, const unsigned long long int &arg)
 		{ return (int) arg; };
 
-		/// Convert template typed argument to format precision int if appropriate conversion
+		/// Convert template typed argument to format width int if appropriate conversion
 		template<typename T>
-		inline int _precisionArg(const int _line_, const char *_file_, T &arg) {
+		inline int _widthArg(const int _line_, const char *_file_, T &&arg) {
 			_printDebug(_line_, _file_);
-			std::cerr << "String Format | Invalid precision argument: (" << typeid(arg).name() << ")" << std::endl << std::endl;
+			std::cerr << "String Format | Invalid width argument: (" << typeid(arg).name() << ")" << std::endl << std::endl;
 			std::exit(EXIT_FAILURE);
 			return 0;
 		};
+
 		inline int _precisionArg(const int _line_, const char *_file_, int &arg) 
 		{ return (int) arg; };
 		inline int _precisionArg(const int _line_, const char *_file_, short int &arg) 
@@ -292,6 +299,15 @@ namespace str { /// Main namespace
 		inline int _precisionArg(const int _line_, const char *_file_, const unsigned long long int &arg)
 		{ return (int) arg; };
 
+		/// Convert template typed argument to format precision int if appropriate conversion
+		template<typename T>
+		inline int _precisionArg(const int _line_, const char *_file_, T &&arg) {
+			_printDebug(_line_, _file_);
+			std::cerr << "String Format | Invalid precision argument: (" << typeid(arg).name() << ")" << std::endl << std::endl;
+			std::exit(EXIT_FAILURE);
+			return 0;
+		};
+
 		/// Structure to hold formatting info
 		struct _Format {
 			char specifier;
@@ -312,8 +328,8 @@ namespace str { /// Main namespace
 		* @return			Returns a _Format object representing the munched format declaration
 		*/
 		inline _Format _parseFormat(const int _line_, const char *_file_,
-			std::string::const_iterator &pos,
-			std::string::const_iterator &fmtE) {
+			char *&pos,
+			char *&fmtE) {
 
 			_Format fmt;
 			/// Assume pos starts on '%'
@@ -431,7 +447,7 @@ namespace str { /// Main namespace
 		inline void _formatBool(const int _line_, const char *_file_,
 			std::ostringstream &ret,
 			const _Format &f,
-			bool &val) {
+			bool &&val) {
 
 			switch (f.specifier) {
 			case 'b':
@@ -455,7 +471,7 @@ namespace str { /// Main namespace
 		inline void _formatBool(const int _line_, const char *_file_,
 			std::ostringstream &ret,
 			const _Format &f,
-			const bool &val) {
+			const bool &&val) {
 
 			switch (f.specifier) {
 			case 'b':
@@ -491,7 +507,7 @@ namespace str { /// Main namespace
 		inline void _formatPtr(const int _line_, const char *_file_,
 			std::ostringstream &ret,
 			const _Format &f,
-			T *&val) {
+			T *&&val) {
 
 			ret << std::showbase << std::hex;
 			size_t *ptr = (size_t*) (&val);
@@ -587,10 +603,6 @@ namespace str { /// Main namespace
 			case 'X':
 				ret << std::hex;
 				break;
-			case 'a':
-			case 'A':
-				ret << std::hexfloat;
-				break;
 			case 'e':
 			case 'E':
 				ret << std::scientific;
@@ -601,25 +613,25 @@ namespace str { /// Main namespace
 			case 'b':
 			case 'B':
 				{ /// Special case: Need to reinterpret val to apply logic
-					_formatBool(_line_, _file_, ret, f, val);
+					_formatBool(_line_, _file_, ret, f, std::forward<T>(val));
 					ret.copyfmt(state); /// Reset stream state to before _formatVal
 					return;
 				}
 			case 'p':
 				{ /// Special case: Need to reinterpret val to apply logic
-					_formatPtr(_line_, _file_, ret, f, val);
+					_formatPtr(_line_, _file_, ret, f, std::forward<T>(val));
 					ret.copyfmt(state); /// Reset stream state to before _formatVal
 					return;
 				}
 			case 's':
 				{ /// Special case: Need to reinterpret val to apply logic
-					_formatString(_line_, _file_, ret, f, val);
+					_formatString(_line_, _file_, ret, f, std::forward<T>(val));
 					ret.copyfmt(state); /// Reset stream state to before _formatVal
 					return;
 				}
 			case 'n':
 				{ /// Special case: Need to reinterpret val to apply logic
-					_formatCurrentLength(_line_, _file_, ret, f, val);
+					_formatCurrentLength(_line_, _file_, ret, f, std::forward<T>(val));
 					ret.copyfmt(state); /// Reset stream state to before _formatVal
 					return;
 				}
@@ -641,8 +653,8 @@ namespace str { /// Main namespace
 		template<typename T0>
 		inline void _formatVal(const int _line_, const char *_file_,
 			std::ostringstream &ret,
-			std::string::const_iterator &pos,
-			std::string::const_iterator &fmtE,
+			char *pos,
+			char *fmtE,
 			T0 &&arg0) {
 
 			/// Modifies pos as it munches the formatting declaration!
@@ -664,8 +676,8 @@ namespace str { /// Main namespace
 				std::exit(EXIT_FAILURE);
 			}
 			else {
-				/// arg0 is the variable to be formatted
-				_formatVal(_line_, _file_, ret, f, arg0);
+				/// std::forward<T0>(arg0) is the variable to be formatted
+				_formatVal(_line_, _file_, ret, f, std::forward<T0>(std::forward<T0>(arg0)));
 				/// Format the remaining string
 				_format(_line_, _file_, ret, pos, fmtE);
 			}
@@ -684,8 +696,8 @@ namespace str { /// Main namespace
 		template<typename T0, typename T1>
 		inline void _formatVal(const int _line_, const char *_file_,
 			std::ostringstream &ret,
-			std::string::const_iterator &pos,
-			std::string::const_iterator &fmtE,
+			char *pos,
+			char *fmtE,
 			T0 &&arg0, T1 &&arg1) {
 
 			/// Modifies pos as it munches the formatting declaration!
@@ -697,26 +709,26 @@ namespace str { /// Main namespace
 				std::exit(EXIT_FAILURE);
 			}
 			else if (f.width == -1) {
-				/// arg0 is the width
+				/// std::forward<T0>(arg0) is the width
 				f.width = _widthArg(_line_, _file_, arg0);
-				/// arg1 is the variable to be formatted
-				_formatVal(_line_, _file_, ret, f, arg1);
+				/// std::forward<T1>(arg1) is the variable to be formatted
+				_formatVal(_line_, _file_, ret, f, std::forward<T1>(arg1));
 				/// Format the remaining string
 				_format(_line_, _file_, ret, pos, fmtE);
 			}
 			else if (f.precision == -1) {
-				/// arg0 is the precision
+				/// std::forward<T0>(arg0) is the precision
 				f.precision = _precisionArg(_line_, _file_, arg0);
-				/// arg1 is the variable to be formatted
-				_formatVal(_line_, _file_, ret, f, arg1);
+				/// std::forward<T1>(arg1) is the variable to be formatted
+				_formatVal(_line_, _file_, ret, f, std::forward<T1>(arg1));
 				/// Format the remaining string
 				_format(_line_, _file_, ret, pos, fmtE);
 			}
 			else {
-				/// arg0 is the variable to be formatted
-				_formatVal(_line_, _file_, ret, f, arg0);
-				/// Format the remaining string, arg1 forwarded
-				_format(_line_, _file_, ret, pos, fmtE, arg1);
+				/// std::forward<T0>(arg0) is the variable to be formatted
+				_formatVal(_line_, _file_, ret, f, std::forward<T0>(arg0));
+				/// Format the remaining string, std::forward<T1>(arg1) forwarded
+				_format(_line_, _file_, ret, pos, fmtE, std::forward<T1>(arg1));
 			}
 		};
 
@@ -735,44 +747,44 @@ namespace str { /// Main namespace
 		template<typename T0, typename T1, typename T2, typename ...Args>
 		inline void _formatVal(const int _line_, const char *_file_,
 			std::ostringstream &ret,
-			std::string::const_iterator &pos,
-			std::string::const_iterator &fmtE,
+			char *pos,
+			char *fmtE,
 			T0 &&arg0, T1 &&arg1, T2 &&arg2, Args &&...args) {
 
 			/// Modifies pos as it munches the formatting declaration!
 			_Format f = _parseFormat(_line_, _file_, pos, fmtE);
 
 			if (f.width == -1 && f.precision == -1) {
-				/// arg0 is the width
+				/// std::forward<T0>(arg0) is the width
 				f.width = _widthArg(_line_, _file_, arg0);
-				/// arg1 is the precision
+				/// std::forward<T1>(arg1) is the precision
 				f.precision = _precisionArg(_line_, _file_, arg1);
-				/// arg2 is the variable to be formatted
-				_formatVal(_line_, _file_, ret, f, arg2);
-				/// Format the remaining string, args... forwarded
-				_format(_line_, _file_, ret, pos, fmtE, args...);
+				/// std::forward<T2>(arg2) is the variable to be formatted
+				_formatVal(_line_, _file_, ret, f, std::forward<T2>(arg2));
+				/// Format the remaining string, std::forward<Args>(args)... forwarded
+				_format(_line_, _file_, ret, pos, fmtE, std::forward<Args>(args)...);
 			}
 			else if (f.width == -1) {
-				/// arg0 is the width
+				/// std::forward<T0>(arg0) is the width
 				f.width = _widthArg(_line_, _file_, arg0);
-				/// arg1 is the variable to be formatted
-				_formatVal(_line_, _file_, ret, f, arg1);
-				/// Format the remaining string, arg2,args... forwarded
-				_format(_line_, _file_, ret, pos, fmtE, arg2, args...);
+				/// std::forward<T1>(arg1) is the variable to be formatted
+				_formatVal(_line_, _file_, ret, f, std::forward<T1>(arg1));
+				/// Format the remaining string, std::forward<T2>(arg2),std::forward<Args>(args)... forwarded
+				_format(_line_, _file_, ret, pos, fmtE, std::forward<T2>(arg2), std::forward<Args>(args)...);
 			}
 			else if (f.precision == -1) {
-				/// arg0 is the precision
+				/// std::forward<T0>(arg0) is the precision
 				f.precision = _precisionArg(_line_, _file_, arg0);
-				/// arg1 is the variable to be formatted
-				_formatVal(_line_, _file_, ret, f, arg1);
-				/// Format the remaining string, arg2,args... forwarded
-				_format(_line_, _file_, ret, pos, fmtE, arg2, args...);
+				/// std::forward<T1>(arg1) is the variable to be formatted
+				_formatVal(_line_, _file_, ret, f, std::forward<T1>(arg1));
+				/// Format the remaining string, std::forward<T2>(arg2),std::forward<Args>(args)... forwarded
+				_format(_line_, _file_, ret, pos, fmtE, std::forward<T2>(arg2), std::forward<Args>(args)...);
 			}
 			else {
-				/// arg0 is the variable to be formatted
-				_formatVal(_line_, _file_, ret, f, arg0);
-				/// Format the remaining string, arg1,arg2,args... forwarded
-				_format(_line_, _file_, ret, pos, fmtE, arg1, arg2, args...);
+				/// std::forward<T0>(arg0) is the variable to be formatted
+				_formatVal(_line_, _file_, ret, f, std::forward<T0>(arg0));
+				/// Format the remaining string, std::forward<T1>(arg1),std::forward<T2>(arg2),std::forward<Args>(args)... forwarded
+				_format(_line_, _file_, ret, pos, fmtE, std::forward<T1>(arg1), std::forward<T2>(arg2), std::forward<Args>(args)...);
 			}
 		};
 
@@ -786,10 +798,10 @@ namespace str { /// Main namespace
 		*/
 		inline void _format(const int _line_, const char *_file_,
 			std::ostringstream &ret,
-			std::string::const_iterator &fmtS,
-			std::string::const_iterator &fmtE) {
+			char *fmtS,
+			char *fmtE) {
 
-			auto pos = std::find(fmtS, fmtE, '%');
+			auto pos = _findChar(fmtS, fmtE, '%');
 			if (pos != fmtE) {
 				/// Grab fmt before delimiter
 				ret << std::string(fmtS, pos);
@@ -824,7 +836,7 @@ namespace str { /// Main namespace
 		/// Count the number of varadic template arguments
 		inline unsigned int _numArgs() { return 0u; };
 		template<typename T, typename ...Args>
-		inline unsigned int _numArgs(T &&val, Args &&...args) { return 1u + _numArgs(args...); };
+		inline unsigned int _numArgs(T &&val, Args &&...args) { return 1u + _numArgs(std::forward<Args>(args)...); };
 
 		/**
 		* Recursively munches through the format string inserting the set of arguments
@@ -838,19 +850,19 @@ namespace str { /// Main namespace
 		template<typename ...Args>
 		inline void _format(const int _line_, const char *_file_,
 			std::ostringstream &ret,
-			std::string::const_iterator &fmtS,
-			std::string::const_iterator &fmtE,
+			char *fmtS,
+			char *fmtE,
 			Args &&...args) {
 
 			/// Find the next format delimiter
-			auto pos = std::find(fmtS, fmtE, '%');
+			auto pos = _findChar(fmtS, fmtE, '%');
 			if (pos == fmtE) {
 				/// If no delimiter is found print the rest of the fmt string blindly
-				//_format(_line_, _file_, ret, fmtS, fmtE); //  remaining args... are discarded
+				//_format(_line_, _file_, ret, fmtS, fmtE); //  remaining std::forward<Args>(args)... are discarded
 
 				_printDebug(_line_, _file_);
 				std::cerr << "String Format | Unused arguments: '"
-						  << (1u + _numArgs(args...)) << '\'' << std::endl << std::endl;
+						  << (1u + _numArgs(std::forward<Args>(args)...)) << '\'' << std::endl << std::endl;
 				std::exit(EXIT_FAILURE);
 			}
 			else {
@@ -868,11 +880,11 @@ namespace str { /// Main namespace
 					ret << '%';
 					pos += 2;
 					/// Formate the remaining string
-					_format(_line_, _file_, ret, pos, fmtE, args...);
+					_format(_line_, _file_, ret, pos, fmtE, std::forward<Args>(args)...);
 				}
 				else {
 					/// Format current argument
-					_formatVal(_line_, _file_, ret, pos, fmtE, args...);
+					_formatVal(_line_, _file_, ret, pos, fmtE, std::forward<Args>(args)...);
 				}
 			}
 		};
@@ -893,7 +905,7 @@ namespace str { /// Main namespace
 	template<typename ...Args>
 	inline std::string format(const int _line_, const char *_file_, const std::string &fmt, Args &&...args) {
 		std::ostringstream ret;
-		str::imp::_format(_line_, _file_, ret, fmt.begin(), fmt.end(), args...);
+		str::imp::_format(_line_, _file_, ret, (char*) &(fmt[0]), (char*) &(fmt[fmt.size()]), std::forward<Args>(args)...);
 		return ret.str();
 	};
 
@@ -905,7 +917,7 @@ namespace str { /// Main namespace
 	*/
 	template<typename ...Args>
 	inline std::string format(const std::string &fmt, Args &&...args) {
-		return str::format(-1, nullptr, fmt, args...);
+		return str::format(-1, nullptr, fmt, std::forward<Args>(args)...);
 	};
 
 }; /// str namespace

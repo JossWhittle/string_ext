@@ -28,7 +28,7 @@ Formats follow the form:
 				# (show base or decimal) 
 
 	specifier : d, i, u, o, x, X, n    (short/int/long/long long & unsigned variants)
-				f, e, E, g, G, a, A    (float / double / long double)
+				f, e, E, g, G		   (float / double / long double)
 				s                      (string / any type with an ostream<< operator), 
 				c                      (char), 
 				p                      (ptr)
@@ -101,7 +101,7 @@ Everything is just like it is with printf! But now you get error handling, typec
 	std::cout << format_str("Cause an error: %i", 0.f);
 	
 	// Line: 105 File: 'test.cpp'
-	// String Format | Incorrect format specifier for type (float): Saw 'i' | Expected 'f, e, E, g, G, a, A'
+	// String Format | Incorrect format specifier for type (float): Saw 'i' | Expected 'f, e, E, g, G'
 	
 	std::cout << format_str("Cause an error: %");
 	
