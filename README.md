@@ -85,7 +85,7 @@ Everything is just like it is with printf! But now you get error handling, typec
 	};
 	SomeObject obj{ 10, 3.14 };
 	
-	printf("Here is an object: "SomeObject{ %i, %f }\n", obj.a, obj.d);	// Have to look inside obj ourselves
+	printf("Here is an object: SomeObject{ %i, %f }\n", obj.a, obj.d);	// Have to look inside obj ourselves
 	// vs. 
 	std::cout << "Here is an object: " << obj << "\n";
 	// vs.
